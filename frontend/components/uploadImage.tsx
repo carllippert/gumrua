@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { supabase } from "../utils/supabase";
+import { useAccount } from "wagmi";
 
-const Upload = () => {
+const UploadImage = ({ onUpload }: { onUpload: (url: string) => void }) => {
   const [uploading, setUploading] = useState(false);
-
-  const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (
+  const { address } = useAccount();
+  const uploadImage: React.ChangeEventHandler<HTMLInputElement> = async (
     event
   ) => {
     try {
@@ -16,11 +17,12 @@ const Upload = () => {
 
       const file = event.target.files[0];
       const fileExt = file.name.split(".").pop();
-      const fileName = `${uid}.${fileExt}`;
+      // const fileName = `${address}.${fileExt}`;
+      const fileName = `test.${fileExt}`;
       const filePath = `${fileName}`;
 
       let { error: uploadError } = await supabase.storage
-        .from("avatars")
+        .from("private")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) {

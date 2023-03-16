@@ -2,7 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Layout from "../components/layout";
-import Upload from "../components/upload";
+import UploadImage from "../components/uploadImage";
 import { useCreateProduct } from "../hooks/use-create-product";
 
 const Create = () => {
@@ -10,6 +10,7 @@ const Create = () => {
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const { mutate: createProduct } = useCreateProduct({
     onSuccess(receipt) {
@@ -29,6 +30,7 @@ const Create = () => {
     createProduct({
       name,
       price: ethers.utils.parseEther(price),
+      image: imageUrl,
     });
   };
 
@@ -63,8 +65,11 @@ const Create = () => {
           }}
         />
       </div>
-      <Upload />
-      <Upload />
+      <UploadImage
+        onUpload={(url: string) => {
+          setImageUrl(url);
+        }}
+      />
       <button
         className="bg-blue-500 text-lg py-1 px-4 rounded-md mt-4"
         onClick={onCreateProduct}
