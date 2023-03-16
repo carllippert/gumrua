@@ -20,6 +20,7 @@ contract Gumrua is ERC1155, Ownable {
         address seller;
         string name;
         uint256 price;
+        string image;
     }
 
     // Product id to product
@@ -39,7 +40,13 @@ contract Gumrua is ERC1155, Ownable {
     /**
      * @dev Emitted when a new product is created
      */
-    event ProductCreated(uint256 indexed _productId, address indexed _seller, string _name, uint256 _price);
+    event ProductCreated(
+        uint256 indexed _productId,
+        address indexed _seller,
+        string _name,
+        uint256 _price,
+        string _image
+    );
 
     /**
      * @dev Emitted when a product is bought
@@ -68,14 +75,15 @@ contract Gumrua is ERC1155, Ownable {
      * @dev Creates a new product
      * @param _name Name of the product
      * @param _price Price of the product
+     * @param _image Image of the product
      */
-    function createProduct(string memory _name, uint256 _price) public {
+    function createProduct(string memory _name, uint256 _price, string memory _image) public {
         uint256 id = nextProductId.current();
-        Product memory product = Product(msg.sender, _name, _price);
+        Product memory product = Product(msg.sender, _name, _price, _image);
         products[id] = product;
         nextProductId.increment();
 
-        emit ProductCreated(id, msg.sender, _name, _price);
+        emit ProductCreated(id, msg.sender, _name, _price, _image);
     }
 
     /**
@@ -151,22 +159,7 @@ contract Gumrua is ERC1155, Ownable {
      * @param _id The ID of the product
      */
     function uri(uint256 _id) public view virtual override returns (string memory) {
-        string memory name = products[_id].name;
-
-        bytes memory image = abi.encodePacked(
-            "data:image/svg+xml;base64,",
-            Base64.encode(
-                bytes(
-                    abi.encodePacked(
-                        '<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720"><rect width="100%" height="100%"/>',
-                        '<text x="30" y="100" style="font: 42px sans-serif;fill:#fff">Gumrua</text>',
-                        '<text x="30" y="670" style="font: 28px sans-serif;fill:#fff">',
-                        name,
-                        "</text></svg>"
-                    )
-                )
-            )
-        );
+        Product memory product = products[_id];
 
         return
             string(
@@ -176,9 +169,9 @@ contract Gumrua is ERC1155, Ownable {
                         bytes(
                             abi.encodePacked(
                                 '{"name":"',
-                                name,
+                                product.name,
                                 '", "image":"',
-                                image,
+                                product.image,
                                 unicode'", "description": "Gumrua Product"}'
                             )
                         )
