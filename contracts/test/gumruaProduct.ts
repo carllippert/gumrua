@@ -55,7 +55,7 @@ describe('Gumrua Product', () => {
 
     it("Sends Bob's money to Alice and fee to owner", async () => {
       const fee = productPrice * 0.05;
-      expect(tx).to.changeEtherBalances(
+      await expect(tx).to.changeEtherBalances(
         [bob, alice, deployer],
         [-productPrice, productPrice - fee, fee],
       );
