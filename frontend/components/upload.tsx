@@ -1,4 +1,40 @@
-const upload = () => {
+import { useState } from "react";
+import { supabase } from "../utils/supabase";
+
+const Upload = () => {
+  const [uploading, setUploading] = useState(false);
+
+  // const uploadFile = async (event) => {
+  //   try {
+  //     setUploading(true);
+
+  //     if (!event.target.files || event.target.files.length === 0) {
+  //       throw new Error("You must select an image to upload.");
+  //     }
+
+  //     const file = event.target.files[0];
+  //     const fileExt = file.name.split(".").pop();
+  //     // const fileName = `${uid}.${fileExt}`;
+  //     const fileName = "derp";
+  //     const filePath = `${fileName}`;
+
+  //     let { error: uploadError } = await supabase.storage
+  //       .from("avatars")
+  //       .upload(filePath, file, { upsert: true });
+
+  //     if (uploadError) {
+  //       throw uploadError;
+  //     }
+
+  //     onUpload(filePath);
+  //   } catch (error) {
+  //     alert("Error uploading avatar!");
+  //     console.log(error);
+  //   } finally {
+  //     setUploading(false);
+  //   }
+  // };
+
   return (
     <div className="flex items-center justify-center w-full">
       <label
@@ -33,4 +69,4 @@ const upload = () => {
   );
 };
 
-export default upload;
+export default Upload;

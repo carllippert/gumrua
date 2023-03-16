@@ -1,8 +1,9 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
-// import styles from "../styles/Home.module.css";
-import Upload from "../components/upload";
+import Upload from "../components/Upload";
+import Header from "../components/Header";
+import logo from "../public/gumrua1.png";
+import Image from "next/image";
 
 const Home: NextPage = () => {
   return (
@@ -15,9 +16,10 @@ const Home: NextPage = () => {
           rel="icon"
         />
       </Head>
-
+      <Header />
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-9xl">GUMRUA</div>
+        {/* <div className="text-9xl">GUMRUA</div> */}
+        <Image src={logo} width="600" height="200" />
         <div className="pt-12">
           <Upload />
         </div>
