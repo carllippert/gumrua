@@ -11,7 +11,6 @@ import "@openzeppelin/contracts/utils/Base64.sol";
  * - claim function instead of sending tokens directly to owner
  * - better metadata image (with gumrua logo)
  * - off-chain data with more info about the product?
- * - allow to update product price
  */
 
 contract GumruaProduct is ERC1155, Ownable {
