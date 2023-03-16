@@ -5,6 +5,12 @@ async function main() {
   const network = hre.network.name;
   console.log('Network:', network);
 
+  const [deployer] = await ethers.getSigners();
+  console.log('Using address: ', deployer.address);
+
+  const balance = await ethers.provider.getBalance(deployer.address);
+  console.log('Balance: ', ethers.utils.formatEther(balance));
+
   const Gumrua = await ethers.getContractFactory('Gumrua');
   const gumrua = await Gumrua.deploy();
   await gumrua.deployed();
