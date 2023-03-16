@@ -1,37 +1,53 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 /**
  * - set price
  * - buy product: mint by paying price
  * - soulbound: block transfers
- * - set uri
+ * - set uri, with name and description of the product
  * - claim function for seller (or maybe this is done by the factory)
+ *
+ * - track balances for sellers (actually send the money directly to them)
  */
 
-contract GumruaProduct is ERC721 {
+contract GumruaProduct is ERC1155 {
     using Counters for Counters.Counter;
 
-    // Price of the product
-    uint256 public price;
+    struct Product {
+        address owner;
+        uint256 price;
+    }
 
-    // Id counter
-    Counters.Counter nextId;
+    // Product id to product
+    mapping(uint256 => Product) public products;
 
-    constructor(string memory _name, string memory _symbol, uint256 _price) ERC721(_name, _symbol) {
-        price = _price;
+    // Product id counter
+    Counters.Counter nextProductId;
+
+    constructor() ERC1155("") {}
+
+    /**
+     * @dev Creates a new product
+     * @param _price Price of the product
+     */
+    function createProduct(uint256 _price) public {
+        uint256 id = nextProductId.current();
+        Product memory product = Product(msg.sender, _price);
+        products[id] = product;
     }
 
     /**
      * @dev Buys the product by paying the price
+     * @param _productId Id of the product
      */
-    function mint() public payable returns (uint256) {
-        require(msg.value >= price, "Not enough ETH sent");
-        uint256 id = nextId.current();
-        _safeMint(msg.sender, id);
-        return id;
+    function buy(uint256 _productId) public payable {
+        Product memory product = products[_productId];
+        require(msg.value >= product.price, "Not enough ETH sent");
+
+        _mint(msg.sender, _productId, 1, "");
     }
 }
