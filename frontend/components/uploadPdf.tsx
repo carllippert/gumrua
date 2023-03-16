@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../utils/supabase";
 import { useAccount } from "wagmi";
-
+import cx from "classnames";
 //Upload pdf or whatever to private folder for sale
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -37,7 +37,7 @@ const UploadPdf = ({
         Math.floor(Math.random() * (max - min + 1)) + min;
       console.log(randomFourDigitNumber);
       // const fileName = `${address}.${fileExt}`;
-      const fileName = `${linuxTimestamp}${randomFourDigitNumber}.${fileExt}`;
+      const fileName = `${slug}.${fileExt}`;
       const filePath = `${fileName}`;
 
       let { error: uploadError, data } = await supabase.storage
@@ -63,7 +63,10 @@ const UploadPdf = ({
     <div className="flex items-center justify-center w-full">
       <label
         // htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-64 border-2 border-primary border-dashed rounded-lg cursor-pointer"
+        className={cx(
+          "flex flex-col items-center justify-center w-full h-64 border-2 border-primary border-dashed rounded-lg cursor-pointer ",
+          { "bg-gray-200 cursor-not-allowed": disabled }
+        )}
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           <svg

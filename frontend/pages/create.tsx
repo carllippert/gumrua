@@ -82,6 +82,7 @@ const Create = () => {
           slug={"test-slug"}
           disabled={true}
           onUpload={(url: string) => {
+            console.log("uploaded PDF", url);
             setPdfUrl(url);
           }}
         />
