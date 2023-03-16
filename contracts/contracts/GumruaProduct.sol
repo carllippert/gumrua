@@ -7,11 +7,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 
 /**
- * - set uri, with name and description of the product
  * - support multiple tokens for payments
  * - claim function instead of sending tokens directly to owner
  * - events
- * - better metadata image
+ * - better metadata image (with gumrua logo)
  * - uri with more info about the product
  */
 
@@ -74,6 +73,10 @@ contract GumruaProduct is ERC1155, Ownable {
 
     // =========================== Owner functions ==============================
 
+    /**
+     * @dev Sets the protocol fee per sale
+     * @param _protocolFee Protocol fee per sale (percentage per 10,000)
+     */
     function setProtocolFee(uint16 _protocolFee) public onlyOwner {
         protocolFee = _protocolFee;
     }
