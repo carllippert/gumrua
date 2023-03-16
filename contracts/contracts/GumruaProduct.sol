@@ -6,12 +6,11 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 /**
  * - set price
- * - buy product: mint by paying price
  * - soulbound: block transfers
  * - set uri, with name and description of the product
  * - claim function for seller (or maybe this is done by the factory)
  *
- * - track balances for sellers (actually send the money directly to them)
+ * - take fee on buy
  */
 
 contract GumruaProduct is ERC1155 {
@@ -44,10 +43,13 @@ contract GumruaProduct is ERC1155 {
      * @dev Buys the product by paying the price
      * @param _productId Id of the product
      */
-    function buy(uint256 _productId) public payable {
+    function buyProduct(uint256 _productId) public payable {
         Product memory product = products[_productId];
         require(msg.value >= product.price, "Not enough ETH sent");
 
         _mint(msg.sender, _productId, 1, "");
+
+        (bool sent, ) = payable(product.owner).call{value: msg.value}("");
+        require(sent, "Failed to send Ether");
     }
 }

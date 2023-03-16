@@ -15,7 +15,7 @@ async function main() {
 
   // Set data
   const productId = 0;
-  const tx = await gumruaProduct.connect(bob).buy(productId, {
+  const tx = await gumruaProduct.connect(bob).buyProduct(productId, {
     value: 100,
   });
   await tx.wait();
