@@ -2,12 +2,10 @@ import { useState } from "react";
 import { supabase } from "../utils/supabase";
 import { useAccount } from "wagmi";
 
-//Upload image to public folder for use as the nft metadata
-
-const UploadImage = ({ onUpload }: { onUpload: (url: string) => void }) => {
+const UploadPdf = ({ onUpload }: { onUpload: (url: string) => void }) => {
   const [uploading, setUploading] = useState(false);
   const { address } = useAccount();
-  const uploadImage: React.ChangeEventHandler<HTMLInputElement> = async (
+  const uploadPdf: React.ChangeEventHandler<HTMLInputElement> = async (
     event
   ) => {
     try {
@@ -24,13 +22,13 @@ const UploadImage = ({ onUpload }: { onUpload: (url: string) => void }) => {
       const filePath = `${fileName}`;
 
       let { error: uploadError } = await supabase.storage
-        .from("public")
+        .from("private")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) {
         throw uploadError;
       }
-      console.log("uploadImage", filePath);
+
       onUpload(filePath);
     } catch (error) {
       alert("Error uploading avatar!");
@@ -66,17 +64,17 @@ const UploadImage = ({ onUpload }: { onUpload: (url: string) => void }) => {
             <span className="font-semibold">Click to upload</span> or drag and
             drop
           </p>
-          <p className="text-xs text-black">PDF, SVG, PNG, JPG or GIF</p>
+          <p className="text-xs text-black">PDF</p>
         </div>
         <input
           id="dropzone-file"
           type="file"
           className="hidden"
-          onChange={uploadImage}
+          onChange={uploadPdf}
         />
       </label>
     </div>
   );
 };
 
-export default UploadImage;
+export default UploadPdf;
