@@ -3,30 +3,19 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import type { AppProps } from "next/app";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import {
-  arbitrum,
-  goerli,
-  hardhat,
-  mainnet,
-  optimism,
-  polygon,
-  gnosisChiado,
-} from "wagmi/chains";
 import { RainbowKitSiweNextAuthProvider } from "@rainbow-me/rainbowkit-siwe-next-auth";
 
+import { gnosis, gnosisChiado, goerli, hardhat } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
-    gnosisChiado,
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    hardhat,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
+    gnosis,
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
+      ? [hardhat, gnosisChiado]
+      : []),
   ],
   [publicProvider()]
 );

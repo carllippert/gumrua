@@ -33,7 +33,7 @@ export interface GumruaInterface extends utils.Interface {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "buyProduct(uint256)": FunctionFragment;
-    "createProduct(string,uint256)": FunctionFragment;
+    "createProduct(string,uint256,string)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "owner()": FunctionFragment;
     "products(uint256)": FunctionFragment;
@@ -84,7 +84,11 @@ export interface GumruaInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "createProduct",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
@@ -206,7 +210,7 @@ export interface GumruaInterface extends utils.Interface {
     "ApprovalForAll(address,address,bool)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "ProductBought(uint256,address,uint256,uint256)": EventFragment;
-    "ProductCreated(uint256,address,string,uint256)": EventFragment;
+    "ProductCreated(uint256,address,string,uint256,string)": EventFragment;
     "ProductPriceUpdated(uint256,uint256)": EventFragment;
     "ProtocolFeeUpdated(uint256)": EventFragment;
     "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
@@ -267,9 +271,10 @@ export interface ProductCreatedEventObject {
   _seller: string;
   _name: string;
   _price: BigNumber;
+  _image: string;
 }
 export type ProductCreatedEvent = TypedEvent<
-  [BigNumber, string, string, BigNumber],
+  [BigNumber, string, string, BigNumber, string],
   ProductCreatedEventObject
 >;
 
@@ -381,6 +386,7 @@ export interface Gumrua extends BaseContract {
     createProduct(
       _name: PromiseOrValue<string>,
       _price: PromiseOrValue<BigNumberish>,
+      _image: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -396,10 +402,11 @@ export interface Gumrua extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber] & {
+      [string, string, BigNumber, string] & {
         seller: string;
         name: string;
         price: BigNumber;
+        image: string;
       }
     >;
 
@@ -480,6 +487,7 @@ export interface Gumrua extends BaseContract {
   createProduct(
     _name: PromiseOrValue<string>,
     _price: PromiseOrValue<BigNumberish>,
+    _image: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -495,10 +503,11 @@ export interface Gumrua extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, string, BigNumber] & {
+    [string, string, BigNumber, string] & {
       seller: string;
       name: string;
       price: BigNumber;
+      image: string;
     }
   >;
 
@@ -579,6 +588,7 @@ export interface Gumrua extends BaseContract {
     createProduct(
       _name: PromiseOrValue<string>,
       _price: PromiseOrValue<BigNumberish>,
+      _image: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -594,10 +604,11 @@ export interface Gumrua extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, BigNumber] & {
+      [string, string, BigNumber, string] & {
         seller: string;
         name: string;
         price: BigNumber;
+        image: string;
       }
     >;
 
@@ -690,17 +701,19 @@ export interface Gumrua extends BaseContract {
       _fee?: null
     ): ProductBoughtEventFilter;
 
-    "ProductCreated(uint256,address,string,uint256)"(
+    "ProductCreated(uint256,address,string,uint256,string)"(
       _productId?: PromiseOrValue<BigNumberish> | null,
       _seller?: PromiseOrValue<string> | null,
       _name?: null,
-      _price?: null
+      _price?: null,
+      _image?: null
     ): ProductCreatedEventFilter;
     ProductCreated(
       _productId?: PromiseOrValue<BigNumberish> | null,
       _seller?: PromiseOrValue<string> | null,
       _name?: null,
-      _price?: null
+      _price?: null,
+      _image?: null
     ): ProductCreatedEventFilter;
 
     "ProductPriceUpdated(uint256,uint256)"(
@@ -773,6 +786,7 @@ export interface Gumrua extends BaseContract {
     createProduct(
       _name: PromiseOrValue<string>,
       _price: PromiseOrValue<BigNumberish>,
+      _image: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -867,6 +881,7 @@ export interface Gumrua extends BaseContract {
     createProduct(
       _name: PromiseOrValue<string>,
       _price: PromiseOrValue<BigNumberish>,
+      _image: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

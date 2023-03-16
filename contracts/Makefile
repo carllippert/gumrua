@@ -14,6 +14,9 @@ create-product:
 buy-product:
 	npx hardhat run scripts/playground/1-buyProduct.ts --network $(NETWORK)
 
+get-uri:
+	npx hardhat run scripts/get-uri.ts --network $(NETWORK)
+
 #-------------- SETUP ----------------#
 
 setup: deploy create-product
