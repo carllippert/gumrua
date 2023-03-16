@@ -6,8 +6,14 @@ import { useBuyProduct } from "../hooks/use-buy-product";
 import { useProduct } from "../hooks/use-product";
 
 const PurchaseInner = ({ productId }: { productId: number }) => {
+  const router = useRouter();
+
   const { data: product } = useProduct(productId);
-  const { mutate: buyProduct } = useBuyProduct();
+  const { mutate: buyProduct } = useBuyProduct({
+    onSuccess() {
+      router.push(`/purchases`);
+    },
+  });
 
   if (!product) return <Spinner />;
 
