@@ -52,6 +52,11 @@ contract GumruaProduct is ERC1155, Ownable {
      */
     event ProductPriceUpdated(uint256 indexed _productId, uint256 _price);
 
+    /**
+     * @dev Emitted when the protocol fee is updated
+     */
+    event ProtocolFeeUpdated(uint256 _fee);
+
     // =========================== Constructor ==============================
 
     constructor() ERC1155("") {
@@ -116,6 +121,8 @@ contract GumruaProduct is ERC1155, Ownable {
      */
     function setProtocolFee(uint16 _protocolFee) public onlyOwner {
         protocolFee = _protocolFee;
+
+        emit ProtocolFeeUpdated(_protocolFee);
     }
 
     // =========================== Overrides ==============================
