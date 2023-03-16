@@ -37,6 +37,7 @@ const wagmiClient = createClient({
   connectors,
   provider,
   webSocketProvider,
+  persister: null,
 });
 
 function MyApp({
