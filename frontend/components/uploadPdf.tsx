@@ -2,7 +2,19 @@ import { useState } from "react";
 import { supabase } from "../utils/supabase";
 import { useAccount } from "wagmi";
 
-const UploadPdf = ({ onUpload }: { onUpload: (url: string) => void }) => {
+//Upload pdf or whatever to private folder for sale
+
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+
+const UploadPdf = ({
+  slug,
+  disabled,
+  onUpload,
+}: {
+  slug: string;
+  disabled: boolean;
+  onUpload: (url: string) => void;
+}) => {
   const [uploading, setUploading] = useState(false);
   const { address } = useAccount();
   const uploadPdf: React.ChangeEventHandler<HTMLInputElement> = async (
@@ -17,8 +29,15 @@ const UploadPdf = ({ onUpload }: { onUpload: (url: string) => void }) => {
 
       const file = event.target.files[0];
       const fileExt = file.name.split(".").pop();
+      //just creating a random number to add to the file name
+      const linuxTimestamp = Math.floor(Date.now() / 1000);
+      const min = 1000;
+      const max = 9999;
+      const randomFourDigitNumber =
+        Math.floor(Math.random() * (max - min + 1)) + min;
+      console.log(randomFourDigitNumber);
       // const fileName = `${address}.${fileExt}`;
-      const fileName = `${file.name}.${fileExt}`;
+      const fileName = `${linuxTimestamp}${randomFourDigitNumber}.${fileExt}`;
       const filePath = `${fileName}`;
 
       let { error: uploadError, data } = await supabase.storage
@@ -31,7 +50,7 @@ const UploadPdf = ({ onUpload }: { onUpload: (url: string) => void }) => {
       console.log("uploadPdf", filePath);
       console.log("uploadPdf", data);
 
-      onUpload(filePath);
+      onUpload(`${filePath}`);
     } catch (error) {
       alert("Error uploading avatar!");
       console.log(error);
@@ -69,6 +88,7 @@ const UploadPdf = ({ onUpload }: { onUpload: (url: string) => void }) => {
           <p className="text-xs text-black">PDF</p>
         </div>
         <input
+          disabled={disabled}
           id="dropzone-file"
           type="file"
           className="hidden"

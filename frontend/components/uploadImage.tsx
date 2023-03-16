@@ -4,6 +4,8 @@ import { useAccount } from "wagmi";
 
 //Upload image to public folder for use as the nft metadata
 
+const supabase_url = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+
 const UploadImage = ({ onUpload }: { onUpload: (url: string) => void }) => {
   const [uploading, setUploading] = useState(false);
   const { address } = useAccount();
@@ -19,21 +21,25 @@ const UploadImage = ({ onUpload }: { onUpload: (url: string) => void }) => {
 
       const file = event.target.files[0];
       const fileExt = file.name.split(".").pop();
-      // const fileName = `${address}.${fileExt}`;
-      const fileName = `${file.name}.${fileExt}`;
+      //just creating a random number to add to the file name
+      const linuxTimestamp = Math.floor(Date.now() / 1000);
+      const min = 1000;
+      const max = 9999;
+      const randomFourDigitNumber =
+        Math.floor(Math.random() * (max - min + 1)) + min;
+      console.log(randomFourDigitNumber);
+      const fileName = `${linuxTimestamp}${randomFourDigitNumber}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      let { error: uploadError, data } = await supabase.storage
+      let { error: uploadError } = await supabase.storage
         .from("public")
         .upload(filePath, file);
 
       if (uploadError) {
         throw uploadError;
       }
-      console.log("uploadImage", filePath);
-      console.log("uploadImage", data);
 
-      onUpload(filePath);
+      onUpload(`${supabase_url}/storage/v1/object/public/public/${filePath}`);
     } catch (error) {
       alert("Error uploading avatar!");
       console.log(error);
