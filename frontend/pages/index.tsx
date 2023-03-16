@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Upload from "../components/upload";
-import Header from "../components/Header";
+import Upload from "../components/c_uppload";
+import Header from "../components/c_head";
 import logo from "../public/gumrua1.png";
 import Image from "next/image";
-import Layout from "../components/layout";
+import Layout from "../components/c_layout";
 
 const Home: NextPage = () => {
   return (
