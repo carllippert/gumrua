@@ -7,12 +7,17 @@ import UploadImage from "../components/uploadImage";
 import UploadPdf from "../components/uploadPdf";
 import { useCreateProduct } from "../hooks/use-create-product";
 import slugify from "slugify";
+import { Input } from "../components/basic/input";
+import { Label } from "../components/basic/label";
+import { Button } from "../components/basic/button";
+import { TextArea } from "../components/basic/textarea";
 
 const Create = () => {
   const router = useRouter();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [pdfUrl, setPdfUrl] = useState("");
 
@@ -30,7 +35,9 @@ const Create = () => {
     },
   });
 
-  const onCreateProduct = async () => {
+  const onCreateProduct = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     createProduct({
       name,
       slug: slugify(name).toLowerCase(),
@@ -43,55 +50,44 @@ const Create = () => {
     <Layout>
       <Container>
         <h1 className="text-4xl font-bold mb-4">Create new product</h1>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name" className="font-bold">
-            Name
-          </label>
-          <input
-            id="name"
-            type="text"
-            className="bg-gray-300 py-2 px-4 rounded-md outline-none text-xl"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-        </div>
-        <div className="flex flex-col gap-2 mt-2">
-          <label htmlFor="price" className="font-bold">
-            Price
-          </label>
-          <input
-            id="price"
+        <form className="flex flex-col gap-2" onSubmit={onCreateProduct}>
+          <Input label="Name" value={name} onValueChange={setName} block />
+          <Input
+            label="Price"
             type="number"
-            className="bg-gray-300 py-2 px-4 rounded-md outline-none text-xl"
             value={price}
-            onChange={(e) => {
-              setPrice(e.target.value);
-            }}
+            onValueChange={setPrice}
+            block
           />
-        </div>
-        Upload Cover Image
-        <UploadImage
-          onUpload={(url: string) => {
-            console.log("uploaded Image", url);
-            setImageUrl(url);
-          }}
-        />
-        Upload PDF
-        <UploadPdf
-          slug={"test-slug"}
-          disabled={true}
-          onUpload={(url: string) => {
-            setPdfUrl(url);
-          }}
-        />
-        <button
-          className="bg-blue-500 text-lg py-1 px-4 rounded-md mt-4"
-          onClick={onCreateProduct}
-        >
-          Publish
-        </button>
+
+          <TextArea
+            label="Description"
+            value={description}
+            onValueChange={setDescription}
+            rows={3}
+          />
+          <div>
+            <Label>Image</Label>
+            <UploadImage
+              onUpload={(url: string) => {
+                setImageUrl(url);
+              }}
+            />
+          </div>
+          <div>
+            <Label>Content</Label>
+            <UploadPdf
+              slug={"test-slug"}
+              disabled={true}
+              onUpload={(url: string) => {
+                setPdfUrl(url);
+              }}
+            />
+          </div>
+          <Button className="mt-2 tracking-wider" size="lg" block type="submit">
+            Publish
+          </Button>
+        </form>
       </Container>
     </Layout>
   );

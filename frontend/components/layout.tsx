@@ -13,7 +13,6 @@ const Layout = ({ children }: { children: any }) => {
         />
       </Head>
       <Header />
-      {children}
       <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pb-12 flex-1">
         {children}
       </main>

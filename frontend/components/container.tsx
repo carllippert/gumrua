@@ -1,8 +1,16 @@
-const Container = ({ children }: { children: any }) => {
+import cx from "classnames";
+import React, { ReactNode } from "react";
+
+interface ContainerProps {
+  children: ReactNode;
+  className?: string;
+}
+
+const Container = ({ children, className }: ContainerProps) => {
   return (
-    <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-12">
+    <div className={cx("max-w-[32rem] mx-auto px-4 sm:px-6", className)}>
       {children}
-    </main>
+    </div>
   );
 };
 

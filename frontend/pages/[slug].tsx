@@ -5,11 +5,12 @@ import { useState } from "react";
 import { useAccount, useToken } from "wagmi";
 import { Button } from "../components/basic/button";
 import Layout from "../components/layout";
-import { Spinner } from "../components/Spinner";
+import { Spinner } from "../components/basic/spinner";
 import { useBuyProduct } from "../hooks/use-buy-product";
 import { useProductBySlug } from "../hooks/use-product-by-slug";
 import { copyToClipboard } from "../utils/copy-to-clipboard";
 import { DocumentDuplicateIcon, CheckIcon } from "@heroicons/react/24/outline";
+import Container from "../components/container";
 
 const PurchaseInner = ({ slug }: { slug: string }) => {
   const { address } = useAccount();
@@ -42,7 +43,7 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
 
   return (
     <Layout>
-      <div className="max-w-[32rem] mx-auto mt-10">
+      <Container className="mt-10">
         <div className="relative h-40 rounded-box overflow-hidden">
           <Image
             src={product.image}
@@ -88,7 +89,7 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
             Buy
           </Button>
         )}
-      </div>
+      </Container>
     </Layout>
   );
 };

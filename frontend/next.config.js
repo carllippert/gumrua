@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["public-files.gumroad.com"],
+    domains: ["public-files.gumroad.com", "qqhuhpdwqoguhxekruva.supabase.co"],
   },
 };
 
