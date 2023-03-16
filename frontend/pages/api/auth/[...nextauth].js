@@ -25,6 +25,7 @@ export default async function auth(req, res) {
           const siwe = new SiweMessage(
             JSON.parse(credentials?.message || "{}")
           );
+          //TODO: check if NFT is owned
           const domain = process.env.DOMAIN;
           if (siwe.domain !== domain) {
             return null;
