@@ -8,21 +8,21 @@ async function main() {
   const [, alice] = await ethers.getSigners();
 
   // Get contract
-  const gumruaProduct = await ethers.getContractAt(
-    'GumruaProduct',
-    getDeploymentProperty(network, ConfigProperty.GumruaProduct),
+  const gumrua = await ethers.getContractAt(
+    'Gumrua',
+    getDeploymentProperty(network, ConfigProperty.Gumrua),
   );
 
   // Set data
   const price = ethers.utils.parseEther('100');
   const name = 'My cool pdf';
-  const tx = await gumruaProduct.connect(alice).createProduct(name, price);
+  const tx = await gumrua.connect(alice).createProduct(name, price);
   const receipt = await tx.wait();
 
   const id = receipt.events?.find((e) => e.event === 'ProductCreated')?.args?._productId;
   console.log('Created new product with id: ', id);
 
-  const product = await gumruaProduct.products(0);
+  const product = await gumrua.products(0);
   console.log('Product: ', product);
 }
 
