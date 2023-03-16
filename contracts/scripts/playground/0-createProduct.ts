@@ -14,7 +14,7 @@ async function main() {
   );
 
   // Set data
-  const price = 100;
+  const price = ethers.utils.parseEther('100');
   const name = 'My cool pdf';
   const tx = await gumruaProduct.connect(alice).createProduct(name, price);
   const receipt = await tx.wait();
