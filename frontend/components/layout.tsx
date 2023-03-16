@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Header from "./head";
+import Header from "./header";
 
 const Layout = ({ children }: { children: any }) => {
   return (
@@ -13,8 +13,10 @@ const Layout = ({ children }: { children: any }) => {
         />
       </Head>
       <Header />
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{children}</main>
-      <footer className="bg-secondary h-32"></footer>
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-12">
+        {children}
+      </main>
+      <footer className="bg-secondary h-32">Footer</footer>
     </div>
   );
 };

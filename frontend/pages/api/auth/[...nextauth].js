@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getCsrfToken } from "next-auth/react";
 import { SiweMessage } from "siwe";
+import { validateNFTOwnership } from "../../utils/validateNFTOwnership";
 
 export default async function auth(req, res) {
   const providers = [
@@ -35,6 +36,10 @@ export default async function auth(req, res) {
           }
 
           await siwe.validate(credentials?.signature || "");
+          const ownsNFT = await validateNFTOwnership(siwe.address);
+          if (!ownsNFT) {
+            return null;
+          }
           return {
             id: siwe.address,
           };
