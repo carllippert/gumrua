@@ -10,6 +10,8 @@ describe('Gumrua', () => {
   const productId = 1;
   const productName = 'My cool pdf';
   const productSlug = 'my-cool-pdf';
+  const productDescription =
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, velit rerum reprehenderit natus omnis eligendi iure amet fugit assumenda cumque id ad qui quos alias odit iusto provident. Nostrum accusamus quae iure quod maiores!';
   const productPrice = 100;
   const productImage =
     'https://public-files.gumroad.com/variants/utn8k57wknpyxf1zjp9ij0f8nvpv/e82ce07851bf15f5ab0ebde47958bb042197dbcdcae02aa122ef3f5b41e97c02';
@@ -27,7 +29,7 @@ describe('Gumrua', () => {
       // Alice creates a product
       const tx = await gumrua
         .connect(alice)
-        .createProduct(productName, productSlug, productPrice, productImage);
+        .createProduct(productName, productSlug, productDescription, productPrice, productImage);
       await tx.wait();
     });
 

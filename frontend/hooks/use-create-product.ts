@@ -8,6 +8,7 @@ export interface CreateProductData {
   price: BigNumber;
   image: string;
   slug: string;
+  description: string;
 }
 
 interface UseCreateProductOptions {
@@ -17,9 +18,15 @@ interface UseCreateProductOptions {
 export const useCreateProduct = (options?: UseCreateProductOptions) => {
   const gumrua = useGumrua(true);
   const mutation = useMutation(
-    async ({ name, slug, price, image }: CreateProductData) => {
+    async ({ name, slug, description, price, image }: CreateProductData) => {
       if (!gumrua) return;
-      const tx = await gumrua.createProduct(name, slug, price, image);
+      const tx = await gumrua.createProduct(
+        name,
+        slug,
+        description,
+        price,
+        image
+      );
       return await tx.wait();
     },
     {

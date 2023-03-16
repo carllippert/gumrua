@@ -53,12 +53,7 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
           />
         </div>
         <h1 className="text-5xl font-medium mt-4">{product.name}</h1>
-        <p className="mt-5">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis,
-          velit rerum reprehenderit natus omnis eligendi iure amet fugit
-          assumenda cumque id ad qui quos alias odit iusto provident. Nostrum
-          accusamus quae iure quod maiores!
-        </p>
+        <p className="mt-5">{product.description}</p>
         <div className="bg-base-200 rounded-box mt-6 mb-2 flex justify-between items-center px-4 py-3">
           <b>Price: </b>
           <span>{ethers.utils.formatEther(product.price)} xDAI</span>

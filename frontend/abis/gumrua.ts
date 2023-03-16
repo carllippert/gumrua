@@ -108,6 +108,12 @@ export const GumruaAbi = [
       },
       {
         indexed: false,
+        internalType: "string",
+        name: "_description",
+        type: "string",
+      },
+      {
+        indexed: false,
         internalType: "uint256",
         name: "_price",
         type: "uint256",
@@ -321,6 +327,11 @@ export const GumruaAbi = [
         type: "string",
       },
       {
+        internalType: "string",
+        name: "_description",
+        type: "string",
+      },
+      {
         internalType: "uint256",
         name: "_price",
         type: "uint256",
@@ -396,6 +407,11 @@ export const GumruaAbi = [
       {
         internalType: "string",
         name: "slug",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "description",
         type: "string",
       },
       {

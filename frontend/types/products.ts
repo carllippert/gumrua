@@ -5,6 +5,7 @@ export interface Product {
   seller: `0x${string}`;
   name: string;
   slug: string;
+  description: string;
   price: BigNumber;
   image: string;
 }

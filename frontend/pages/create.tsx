@@ -41,6 +41,7 @@ const Create = () => {
     createProduct({
       name,
       slug: slugify(name).toLowerCase(),
+      description,
       price: ethers.utils.parseEther(price),
       image: imageUrl,
     });

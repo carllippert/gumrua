@@ -14,13 +14,14 @@ export const useProductBySlug = (productSlug: string) => {
       if (productId.eq(0)) return;
 
       const product = await gumrua.products(productId);
-      const { seller, name, slug, price, image } = product;
+      const { seller, name, slug, description, price, image } = product;
 
       return {
         id: productId.toNumber(),
         seller: seller as `0x${string}`,
         name,
         slug,
+        description,
         price,
         image,
       };

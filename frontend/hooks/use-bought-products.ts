@@ -24,6 +24,7 @@ export const useBoughtProducts = () => {
         id: id.toNumber(),
         name: product.name,
         slug: product.slug,
+        description: product.description,
         price: product.price,
         seller: product.seller as `0x${string}`,
         image: product.image,
