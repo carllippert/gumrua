@@ -11,6 +11,7 @@ describe('Gumrua Product', () => {
     gumruaProduct: GumruaProduct;
 
   const productPrice = 100;
+  const productName = 'My cool pdf';
   const productId = 0;
 
   before(async () => {
@@ -24,14 +25,15 @@ describe('Gumrua Product', () => {
   describe('Create product', async () => {
     before(async () => {
       // Alice creates a product
-      const tx = await gumruaProduct.connect(alice).createProduct(productPrice);
+      const tx = await gumruaProduct.connect(alice).createProduct(productName, productPrice);
       await tx.wait();
     });
 
     it('Creates product with the correct data', async () => {
       const product = await gumruaProduct.products(0);
       expect(product.price).to.equal(productPrice);
-      expect(product.owner).to.equal(alice.address);
+      expect(product.seller).to.equal(alice.address);
+      expect(product.name).to.equal(productName);
     });
   });
 
