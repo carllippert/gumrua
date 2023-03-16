@@ -9,7 +9,7 @@ async function main() {
   const gumrua = await Gumrua.deploy();
   await gumrua.deployed();
 
-  console.log('Deployed Storage at', gumrua.address);
+  console.log('Deployed Gumrua at', gumrua.address);
   setDeploymentProperty(network, ConfigProperty.Gumrua, gumrua.address);
 }
 
