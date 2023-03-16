@@ -7,7 +7,7 @@ import { Gumrua } from '../typechain-types';
 describe('Gumrua', () => {
   let deployer: SignerWithAddress, alice: SignerWithAddress, bob: SignerWithAddress, gumrua: Gumrua;
 
-  const productId = 0;
+  const productId = 1;
   const productName = 'My cool pdf';
   const productSlug = 'my-cool-pdf';
   const productPrice = 100;
@@ -32,7 +32,7 @@ describe('Gumrua', () => {
     });
 
     it('Creates product with the correct data', async () => {
-      const product = await gumrua.products(0);
+      const product = await gumrua.products(productId);
       expect(product.price).to.equal(productPrice);
       expect(product.seller).to.equal(alice.address);
       expect(product.name).to.equal(productName);

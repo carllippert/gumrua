@@ -11,6 +11,7 @@ export const useProductBySlug = (productSlug: string) => {
       if (!gumrua) return;
 
       const productId = await gumrua.slugToId(productSlug);
+      if (productId.eq(0)) return;
 
       const product = await gumrua.products(productId);
       const { seller, name, slug, price, image } = product;

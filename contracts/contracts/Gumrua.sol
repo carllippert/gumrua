@@ -72,6 +72,7 @@ contract Gumrua is ERC1155, Ownable {
 
     constructor() ERC1155("") {
         setProtocolFee(500);
+        nextProductId.increment();
     }
 
     // =========================== User functions ==============================
