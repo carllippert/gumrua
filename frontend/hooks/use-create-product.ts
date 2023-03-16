@@ -6,6 +6,7 @@ import { useGumrua } from "./use-gumrua";
 export interface CreateProductData {
   name: string;
   price: BigNumber;
+  image: string;
 }
 
 interface UseCreateProductOptions {
@@ -15,9 +16,9 @@ interface UseCreateProductOptions {
 export const useCreateProduct = (options?: UseCreateProductOptions) => {
   const gumrua = useGumrua(true);
   const mutation = useMutation(
-    async ({ name, price }: CreateProductData) => {
+    async ({ name, price, image }: CreateProductData) => {
       if (!gumrua) return;
-      const tx = await gumrua.createProduct(name, price);
+      const tx = await gumrua.createProduct(name, price, image);
       return await tx.wait();
     },
     {

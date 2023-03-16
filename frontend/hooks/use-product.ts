@@ -9,13 +9,14 @@ export const useProduct = (productId: number) => {
     if (!gumrua) return;
 
     const product = await gumrua.products(productId);
-    const { seller, name, price } = product;
+    const { seller, name, price, image } = product;
 
     return {
       id: productId,
       seller: seller as `0x${string}`,
       name,
       price,
+      image,
     };
   });
 };

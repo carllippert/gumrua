@@ -25,6 +25,7 @@ export const useBoughtProducts = () => {
         name: product.name,
         price: product.price,
         seller: product.seller as `0x${string}`,
+        image: product.image,
       });
     }
 

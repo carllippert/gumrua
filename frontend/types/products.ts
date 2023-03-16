@@ -5,4 +5,5 @@ export interface Product {
   seller: `0x${string}`;
   name: string;
   price: BigNumber;
+  image: string;
 }
