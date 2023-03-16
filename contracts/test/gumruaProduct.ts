@@ -59,4 +59,20 @@ describe('Gumrua Product', () => {
       );
     });
   });
+
+  describe('Token transfers', async () => {
+    it("Tokens can't be transferred", async () => {
+      const tx = gumruaProduct
+        .connect(bob)
+        .safeTransferFrom(bob.address, alice.address, productId, 1, []);
+
+      await expect(tx).to.be.revertedWith('Token transfer is not allowed');
+
+      const tx2 = gumruaProduct
+        .connect(bob)
+        .safeBatchTransferFrom(bob.address, alice.address, [productId], [1], []);
+
+      await expect(tx2).to.be.revertedWith('Token transfer is not allowed');
+    });
+  });
 });

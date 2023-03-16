@@ -9,9 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * - set price
  * - soulbound: block transfers
  * - set uri, with name and description of the product
- * - claim function for seller (or maybe this is done by the factory)
  *
- * - take fee on buy
  * - support multiple tokens
  */
 
@@ -74,5 +72,27 @@ contract GumruaProduct is ERC1155, Ownable {
 
     function setProtocolFee(uint16 _protocolFee) public onlyOwner {
         protocolFee = _protocolFee;
+    }
+
+    // =========================== Overrides ==============================
+
+    /**
+     * @dev Blocks token transfers
+     */
+    function safeTransferFrom(address, address, uint256, uint256, bytes memory) public virtual override {
+        revert("Token transfer is not allowed");
+    }
+
+    /**
+     * @dev Blocks token transfers
+     */
+    function safeBatchTransferFrom(
+        address,
+        address,
+        uint256[] memory,
+        uint256[] memory,
+        bytes memory
+    ) public virtual override {
+        revert("Token transfer is not allowed");
     }
 }
