@@ -2,6 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Layout from "../components/layout";
+import Upload from "../components/upload";
 import { useCreateProduct } from "../hooks/use-create-product";
 
 const Create = () => {
@@ -62,6 +63,8 @@ const Create = () => {
           }}
         />
       </div>
+      <Upload />
+      <Upload />
       <button
         className="bg-blue-500 text-lg py-1 px-4 rounded-md mt-4"
         onClick={onCreateProduct}

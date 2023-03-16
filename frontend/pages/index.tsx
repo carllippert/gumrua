@@ -10,8 +10,8 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Image src={logo} width="1200" height="400" alt="gumrua logo" />
-      <div className="pt-12">
-        <Upload />
+      <div className="border-y-2  border-solid border-black h-16">
+        {/* <Upload /> */}
       </div>
     </Layout>
   );
