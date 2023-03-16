@@ -4,13 +4,15 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Base64.sol";
 
 /**
- * - set price
- * - soulbound: block transfers
  * - set uri, with name and description of the product
- *
- * - support multiple tokens
+ * - support multiple tokens for payments
+ * - claim function instead of sending tokens directly to owner
+ * - events
+ * - better metadata image
+ * - uri with more info about the product
  */
 
 contract GumruaProduct is ERC1155, Ownable {
@@ -18,6 +20,7 @@ contract GumruaProduct is ERC1155, Ownable {
 
     struct Product {
         address owner;
+        string name;
         uint256 price;
     }
 
@@ -41,11 +44,12 @@ contract GumruaProduct is ERC1155, Ownable {
 
     /**
      * @dev Creates a new product
+     * @param _name Name of the product
      * @param _price Price of the product
      */
-    function createProduct(uint256 _price) public {
+    function createProduct(string memory _name, uint256 _price) public {
         uint256 id = nextProductId.current();
-        Product memory product = Product(msg.sender, _price);
+        Product memory product = Product(msg.sender, _name, _price);
         products[id] = product;
     }
 
@@ -94,5 +98,46 @@ contract GumruaProduct is ERC1155, Ownable {
         bytes memory
     ) public virtual override {
         revert("Token transfer is not allowed");
+    }
+
+    /**
+     * @dev See {IERC1155MetadataURI-uri}.
+     * @param _id The ID of the product
+     */
+    function uri(uint256 _id) public view virtual override returns (string memory) {
+        string memory name = products[_id].name;
+
+        bytes memory image = abi.encodePacked(
+            "data:image/svg+xml;base64,",
+            Base64.encode(
+                bytes(
+                    abi.encodePacked(
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720"><rect width="100%" height="100%"/>',
+                        '<text x="30" y="100" style="font: 42px sans-serif;fill:#fff">Gumrua</text>',
+                        '<text x="30" y="670" style="font: 28px sans-serif;fill:#fff">',
+                        name,
+                        "</text></svg>"
+                    )
+                )
+            )
+        );
+
+        return
+            string(
+                abi.encodePacked(
+                    "data:application/json;base64,",
+                    Base64.encode(
+                        bytes(
+                            abi.encodePacked(
+                                '{"name":"',
+                                name,
+                                '", "image":"',
+                                image,
+                                unicode'", "description": "Gumrua Product"}'
+                            )
+                        )
+                    )
+                )
+            );
     }
 }

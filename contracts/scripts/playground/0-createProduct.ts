@@ -15,10 +15,14 @@ async function main() {
 
   // Set data
   const price = 100;
-  const tx = await gumruaProduct.connect(alice).createProduct(price);
+  const name = 'My cool pdf';
+  const tx = await gumruaProduct.connect(alice).createProduct(name, price);
   await tx.wait();
 
   const product = await gumruaProduct.products(0);
+
+  const uri = await gumruaProduct.uri(0);
+  console.log('Uri: ', uri);
 
   console.log('Created new product: ', product);
 }
