@@ -6,7 +6,7 @@ import Upload from "../components/upload";
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <div data-theme="cupcake" className="min-h-screen">
       <Head>
         <title>GumRua</title>
         <meta content="web3 gumroad" name="description" />
@@ -18,7 +18,9 @@ const Home: NextPage = () => {
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-9xl">GUMRUA</div>
-        <Upload />
+        <div className="pt-12">
+          <Upload />
+        </div>
       </main>
     </div>
   );
