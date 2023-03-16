@@ -70,14 +70,16 @@ const Create = () => {
             }}
           />
         </div>
-        <UploadImage
-          onUpload={(url: string) => {
-            setImageUrl(url);
-          }}
-        />
+        Upload PDF
         <UploadPdf
           onUpload={(url: string) => {
             setPdfUrl(url);
+          }}
+        />
+        Upload Cover Image
+        <UploadImage
+          onUpload={(url: string) => {
+            setImageUrl(url);
           }}
         />
         <button

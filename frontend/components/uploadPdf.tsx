@@ -18,16 +18,18 @@ const UploadPdf = ({ onUpload }: { onUpload: (url: string) => void }) => {
       const file = event.target.files[0];
       const fileExt = file.name.split(".").pop();
       // const fileName = `${address}.${fileExt}`;
-      const fileName = `test.${fileExt}`;
+      const fileName = `${file.name}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      let { error: uploadError } = await supabase.storage
+      let { error: uploadError, data } = await supabase.storage
         .from("private")
-        .upload(filePath, file, { upsert: true });
+        .upload(filePath, file);
 
       if (uploadError) {
         throw uploadError;
       }
+      console.log("uploadPdf", filePath);
+      console.log("uploadPdf", data);
 
       onUpload(filePath);
     } catch (error) {
@@ -41,7 +43,7 @@ const UploadPdf = ({ onUpload }: { onUpload: (url: string) => void }) => {
   return (
     <div className="flex items-center justify-center w-full">
       <label
-        htmlFor="dropzone-file"
+        // htmlFor="dropzone-file"
         className="flex flex-col items-center justify-center w-full h-64 border-2 border-primary border-dashed rounded-lg cursor-pointer"
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
