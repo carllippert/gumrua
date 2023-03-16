@@ -10,3 +10,6 @@ deploy:
 
 create-product:
 	npx hardhat run scripts/playground/0-createProduct.ts --network $(NETWORK)
+
+buy-product:
+	npx hardhat run scripts/playground/1-buyProduct.ts --network $(NETWORK)
