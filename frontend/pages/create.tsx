@@ -33,7 +33,7 @@ const Create = () => {
   const onCreateProduct = async () => {
     createProduct({
       name,
-      slug: slugify(name),
+      slug: slugify(name).toLowerCase(),
       price: ethers.utils.parseEther(price),
       image: imageUrl,
     });
