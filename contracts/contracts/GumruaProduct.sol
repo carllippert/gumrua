@@ -19,7 +19,7 @@ contract GumruaProduct is ERC1155, Ownable {
     using Counters for Counters.Counter;
 
     struct Product {
-        address owner;
+        address seller;
         string name;
         uint256 price;
     }
@@ -41,7 +41,7 @@ contract GumruaProduct is ERC1155, Ownable {
     /**
      * @dev Emitted when a new product is created
      */
-    event ProductCreated(uint256 indexed _productId, address indexed _owner, string _name, uint256 _price);
+    event ProductCreated(uint256 indexed _productId, address indexed _seller, string _name, uint256 _price);
 
     /**
      * @dev Emitted when a product is bought
@@ -82,10 +82,10 @@ contract GumruaProduct is ERC1155, Ownable {
 
         uint256 fee = (protocolFee * msg.value) / FEE_DIVIDER;
 
-        (bool sentSeller, ) = payable(product.owner).call{value: msg.value - fee}("");
+        (bool sentSeller, ) = payable(product.seller).call{value: msg.value - fee}("");
         require(sentSeller, "Failed to send Ether to seller");
 
-        (bool sentOwner, ) = payable(product.owner).call{value: fee}("");
+        (bool sentOwner, ) = payable(owner()).call{value: fee}("");
         require(sentOwner, "Failed to send Ether to owner");
 
         emit ProductBought(_productId, msg.sender, msg.value, fee);
