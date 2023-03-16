@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Upload from "../components/upload";
 import Header from "../components/header";
-import logo from "../public/gumrua1.png";
+import logo from "../public/gumrua.svg";
 import Image from "next/image";
 import Layout from "../components/layout";
 
