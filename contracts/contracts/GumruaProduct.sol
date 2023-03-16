@@ -11,7 +11,8 @@ import "@openzeppelin/contracts/utils/Base64.sol";
  * - claim function instead of sending tokens directly to owner
  * - events
  * - better metadata image (with gumrua logo)
- * - uri with more info about the product
+ * - off-chain data with more info about the product?
+ * - allow to update product price
  */
 
 contract GumruaProduct is ERC1155, Ownable {
@@ -41,6 +42,11 @@ contract GumruaProduct is ERC1155, Ownable {
      * @dev Emitted when a new product is created
      */
     event ProductCreated(uint256 indexed _productId, address indexed _owner, string _name, uint256 _price);
+
+    /**
+     * @dev Emitted when a product is bought
+     */
+    event ProductBought(uint256 indexed _productId, address indexed _buyer, uint256 _price, uint256 _fee);
 
     // =========================== Constructor ==============================
 
@@ -81,6 +87,8 @@ contract GumruaProduct is ERC1155, Ownable {
 
         (bool sentOwner, ) = payable(product.owner).call{value: fee}("");
         require(sentOwner, "Failed to send Ether to owner");
+
+        emit ProductBought(_productId, msg.sender, msg.value, fee);
     }
 
     // =========================== Owner functions ==============================
