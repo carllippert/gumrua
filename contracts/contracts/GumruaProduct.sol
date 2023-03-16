@@ -35,6 +35,15 @@ contract GumruaProduct is ERC1155, Ownable {
     // Divider used for fees
     uint16 private constant FEE_DIVIDER = 10000;
 
+    // =========================== Events ==============================
+
+    /**
+     * @dev Emitted when a new product is created
+     */
+    event ProductCreated(uint256 indexed _productId, address indexed _owner, string _name, uint256 _price);
+
+    // =========================== Constructor ==============================
+
     constructor() ERC1155("") {
         setProtocolFee(500);
     }
@@ -50,6 +59,9 @@ contract GumruaProduct is ERC1155, Ownable {
         uint256 id = nextProductId.current();
         Product memory product = Product(msg.sender, _name, _price);
         products[id] = product;
+        nextProductId.increment();
+
+        emit ProductCreated(id, msg.sender, _name, _price);
     }
 
     /**

@@ -17,14 +17,13 @@ async function main() {
   const price = 100;
   const name = 'My cool pdf';
   const tx = await gumruaProduct.connect(alice).createProduct(name, price);
-  await tx.wait();
+  const receipt = await tx.wait();
+
+  const id = receipt.events?.find((e) => e.event === 'ProductCreated')?.args?._productId;
+  console.log('Created new product with id: ', id);
 
   const product = await gumruaProduct.products(0);
-
-  const uri = await gumruaProduct.uri(0);
-  console.log('Uri: ', uri);
-
-  console.log('Created new product: ', product);
+  console.log('Product: ', product);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
