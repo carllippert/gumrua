@@ -3,12 +3,12 @@ import { Product } from "../types/products";
 import { useGumrua } from "./use-gumrua";
 
 export const useProduct = (productId: number) => {
-  const gumruaProduct = useGumrua();
+  const gumrua = useGumrua();
 
   return useQuery<Product | undefined>(["product", productId], async () => {
-    if (!gumruaProduct) return;
+    if (!gumrua) return;
 
-    const product = await gumruaProduct.products(productId);
+    const product = await gumrua.products(productId);
     const { seller, name, price } = product;
 
     return {
