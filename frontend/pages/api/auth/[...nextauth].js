@@ -45,12 +45,6 @@ export default async function auth(req, res) {
     }),
   ];
 
-  // if (
-  //   req &&
-  //   req.query &&
-  //   req.query.nextauth &&
-  //   req.query.nextauth.includes("signin")
-  // ) {
   const isDefaultSigninPage =
     req.method === "GET" && req.query.nextauth.includes("signin");
 
@@ -75,7 +69,4 @@ export default async function auth(req, res) {
       },
     },
   });
-  // } else {
-  //   return { error: "Something Diead" };
-  // }
 }

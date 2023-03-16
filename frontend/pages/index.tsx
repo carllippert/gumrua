@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Upload from "../components/upload";
-import Header from "../components/header";
+import Header from "../components/Header";
 import logo from "../public/gumrua1.png";
 import Image from "next/image";
 import Layout from "../components/layout";
