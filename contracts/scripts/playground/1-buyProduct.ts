@@ -8,14 +8,14 @@ async function main() {
   const [, , bob] = await ethers.getSigners();
 
   // Get contract
-  const gumruaProduct = await ethers.getContractAt(
-    'GumruaProduct',
-    getDeploymentProperty(network, ConfigProperty.GumruaProduct),
+  const gumrua = await ethers.getContractAt(
+    'Gumrua',
+    getDeploymentProperty(network, ConfigProperty.Gumrua),
   );
 
   // Set data
   const productId = 0;
-  const tx = await gumruaProduct.connect(bob).buyProduct(productId, {
+  const tx = await gumrua.connect(bob).buyProduct(productId, {
     value: ethers.utils.parseEther('100'),
   });
   await tx.wait();

@@ -13,7 +13,7 @@ import "@openzeppelin/contracts/utils/Base64.sol";
  * - off-chain data with more info about the product?
  */
 
-contract GumruaProduct is ERC1155, Ownable {
+contract Gumrua is ERC1155, Ownable {
     using Counters for Counters.Counter;
 
     struct Product {

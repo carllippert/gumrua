@@ -5,12 +5,12 @@ async function main() {
   const network = hre.network.name;
   console.log('Network:', network);
 
-  const GumruaProduct = await ethers.getContractFactory('GumruaProduct');
-  const gumruaProduct = await GumruaProduct.deploy();
-  await gumruaProduct.deployed();
+  const Gumrua = await ethers.getContractFactory('Gumrua');
+  const gumrua = await Gumrua.deploy();
+  await gumrua.deployed();
 
-  console.log('Deployed Storage at', gumruaProduct.address);
-  setDeploymentProperty(network, ConfigProperty.GumruaProduct, gumruaProduct.address);
+  console.log('Deployed Gumrua at', gumrua.address);
+  setDeploymentProperty(network, ConfigProperty.Gumrua, gumrua.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

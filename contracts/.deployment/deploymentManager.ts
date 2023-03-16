@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 export enum ConfigProperty {
-  GumruaProduct = 'gumruaProductAddress',
+  Gumrua = 'gumruaAddress',
 }
 
 const getFilename = (network: string) => `${__dirname}/${network}.json`;
