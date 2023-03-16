@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "../components/layout";
 import { useBoughtProducts } from "../hooks/use-bought-products";
 
 const PurchasesPage = () => {

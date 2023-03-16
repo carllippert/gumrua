@@ -14,7 +14,7 @@ async function main() {
   );
 
   // Set data
-  const productId = 0;
+  const productId = 1;
   const tx = await gumrua.connect(bob).buyProduct(productId, {
     value: ethers.utils.parseEther('100'),
   });

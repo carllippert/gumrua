@@ -64,14 +64,14 @@ const UploadPdf = ({
       <label
         // htmlFor="dropzone-file"
         className={cx(
-          "flex flex-col items-center justify-center w-full h-64 border-2 border-primary border-dashed rounded-lg cursor-pointer ",
+          "flex flex-col items-center justify-center w-full h-32 border-2 border-primary border-dashed rounded-lg cursor-pointer",
           { "bg-gray-200 cursor-not-allowed": disabled }
         )}
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           <svg
             aria-hidden="true"
-            className="w-10 h-10 mb-3 text-black"
+            className="w-8 h-8 mb-3 text-black"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

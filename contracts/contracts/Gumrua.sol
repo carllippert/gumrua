@@ -19,12 +19,17 @@ contract Gumrua is ERC1155, Ownable {
     struct Product {
         address seller;
         string name;
+        string slug;
+        string description;
         uint256 price;
         string image;
     }
 
     // Product id to product
     mapping(uint256 => Product) public products;
+
+    // Mapping from slug to product id
+    mapping(string => uint256) public slugToId;
 
     // Product id counter
     Counters.Counter nextProductId;
@@ -44,6 +49,8 @@ contract Gumrua is ERC1155, Ownable {
         uint256 indexed _productId,
         address indexed _seller,
         string _name,
+        string _slug,
+        string _description,
         uint256 _price,
         string _image
     );
@@ -67,6 +74,7 @@ contract Gumrua is ERC1155, Ownable {
 
     constructor() ERC1155("") {
         setProtocolFee(500);
+        nextProductId.increment();
     }
 
     // =========================== User functions ==============================
@@ -74,16 +82,25 @@ contract Gumrua is ERC1155, Ownable {
     /**
      * @dev Creates a new product
      * @param _name Name of the product
+     * @param _slug Slug of the product
+     * @param _description Description of the product
      * @param _price Price of the product
      * @param _image Image of the product
      */
-    function createProduct(string memory _name, uint256 _price, string memory _image) public {
+    function createProduct(
+        string memory _name,
+        string memory _slug,
+        string memory _description,
+        uint256 _price,
+        string memory _image
+    ) public {
         uint256 id = nextProductId.current();
-        Product memory product = Product(msg.sender, _name, _price, _image);
+        Product memory product = Product(msg.sender, _name, _slug, _description, _price, _image);
         products[id] = product;
+        slugToId[_slug] = id;
         nextProductId.increment();
 
-        emit ProductCreated(id, msg.sender, _name, _price, _image);
+        emit ProductCreated(id, msg.sender, _name, _slug, _description, _price, _image);
     }
 
     /**

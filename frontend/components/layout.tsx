@@ -3,7 +3,7 @@ import Header from "./header";
 
 const Layout = ({ children }: { children: any }) => {
   return (
-    <div data-theme="cupcake" className="min-h-screen">
+    <div data-theme="cupcake" className="min-h-screen flex flex-col">
       <Head>
         <title>GumRua</title>
         <meta content="web3 gumroad" name="description" />
@@ -13,10 +13,10 @@ const Layout = ({ children }: { children: any }) => {
         />
       </Head>
       <Header />
-
-      {children}
-
-      <footer className="bg-secondary h-32">Footer</footer>
+      <main className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pb-12 flex-1">
+        {children}
+      </main>
+      {/* <footer className="h-32">Footer</footer> */}
     </div>
   );
 };

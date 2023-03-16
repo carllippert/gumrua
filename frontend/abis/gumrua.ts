@@ -102,6 +102,18 @@ export const GumruaAbi = [
       },
       {
         indexed: false,
+        internalType: "string",
+        name: "_slug",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "_description",
+        type: "string",
+      },
+      {
+        indexed: false,
         internalType: "uint256",
         name: "_price",
         type: "uint256",
@@ -310,6 +322,16 @@ export const GumruaAbi = [
         type: "string",
       },
       {
+        internalType: "string",
+        name: "_slug",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_description",
+        type: "string",
+      },
+      {
         internalType: "uint256",
         name: "_price",
         type: "uint256",
@@ -380,6 +402,16 @@ export const GumruaAbi = [
       {
         internalType: "string",
         name: "name",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "slug",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "description",
         type: "string",
       },
       {
@@ -511,6 +543,25 @@ export const GumruaAbi = [
     name: "setProtocolFee",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    name: "slugToId",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
