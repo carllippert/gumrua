@@ -51,8 +51,12 @@ describe('Gumrua Product', () => {
       expect(balance).to.equal(1);
     });
 
-    it("Sends Bob's money to Alice", async () => {
-      expect(tx).to.changeEtherBalances([bob, alice], [-productPrice, productPrice]);
+    it("Sends Bob's money to Alice and fee to owner", async () => {
+      const fee = productPrice * 0.05;
+      expect(tx).to.changeEtherBalances(
+        [bob, alice, deployer],
+        [-productPrice, productPrice - fee, fee],
+      );
     });
   });
 });
