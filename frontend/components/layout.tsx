@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Header from "./c_head";
+import Header from "./head";
 
 const Layout = ({ children }: { children: any }) => {
   return (

@@ -4,7 +4,7 @@ import { SiweMessage } from "siwe";
 import { useAccount, useConnect, useNetwork, useSignMessage } from "wagmi";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Layout from "../components/c_layout";
+import Layout from "../components/layout";
 
 const Download = () => {
   const [message, setMessage] = useState();
