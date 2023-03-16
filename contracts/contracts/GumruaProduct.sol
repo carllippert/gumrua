@@ -9,7 +9,6 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 /**
  * - support multiple tokens for payments
  * - claim function instead of sending tokens directly to owner
- * - events
  * - better metadata image (with gumrua logo)
  * - off-chain data with more info about the product?
  * - allow to update product price
@@ -48,6 +47,11 @@ contract GumruaProduct is ERC1155, Ownable {
      */
     event ProductBought(uint256 indexed _productId, address indexed _buyer, uint256 _price, uint256 _fee);
 
+    /**
+     * @dev Emitted when the price of a product is updated
+     */
+    event ProductPriceUpdated(uint256 indexed _productId, uint256 _price);
+
     // =========================== Constructor ==============================
 
     constructor() ERC1155("") {
@@ -68,6 +72,19 @@ contract GumruaProduct is ERC1155, Ownable {
         nextProductId.increment();
 
         emit ProductCreated(id, msg.sender, _name, _price);
+    }
+
+    /**
+     * @dev Updates the price of the product
+     * @param _productId Id of the product
+     * @param _price New price of the product
+     */
+    function updateProductPrice(uint256 _productId, uint256 _price) public {
+        Product storage product = products[_productId];
+        require(product.seller == msg.sender, "Only seller can update price");
+        product.price = _price;
+
+        emit ProductPriceUpdated(_productId, _price);
     }
 
     /**

@@ -62,6 +62,26 @@ describe('Gumrua Product', () => {
     });
   });
 
+  describe('Update product price', async () => {
+    const newPrice = 200;
+
+    before(async () => {
+      // Alice updates her product price
+      const tx = await gumruaProduct.connect(alice).updateProductPrice(productId, newPrice);
+      await tx.wait();
+    });
+
+    it('Updates the product price', async () => {
+      const price = (await gumruaProduct.products(productId)).price;
+      expect(price).to.equal(newPrice);
+    });
+
+    it('Only the owner can update the product price', async () => {
+      const tx = gumruaProduct.connect(bob).updateProductPrice(productId, newPrice);
+      expect(tx).to.be.revertedWith('Only seller can update price');
+    });
+  });
+
   describe('Token transfers', async () => {
     it("Tokens can't be transferred", async () => {
       const tx = gumruaProduct
