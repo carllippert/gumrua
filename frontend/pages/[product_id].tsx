@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { useRouter } from "next/router";
-import Layout from "../components/Layout";
+import Layout from "../components/layout";
 import { Spinner } from "../components/Spinner";
 import { useBuyProduct } from "../hooks/use-buy-product";
 import { useProduct } from "../hooks/use-product";
