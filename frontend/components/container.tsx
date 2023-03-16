@@ -1,6 +1,8 @@
 import cx from "classnames";
 import React, { ReactNode } from "react";
 
+import { twMerge } from "tailwind-merge";
+
 interface ContainerProps {
   children: ReactNode;
   className?: string;
@@ -8,7 +10,9 @@ interface ContainerProps {
 
 const Container = ({ children, className }: ContainerProps) => {
   return (
-    <div className={cx("max-w-[32rem] mx-auto px-4 sm:px-6", className)}>
+    <div
+      className={twMerge(cx("max-w-[34rem] mx-auto px-4 sm:px-6", className))}
+    >
       {children}
     </div>
   );

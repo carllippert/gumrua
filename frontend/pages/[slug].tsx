@@ -50,9 +50,10 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
             layout="fill"
             objectFit="cover"
             alt="Product"
+            priority
           />
         </div>
-        <h1 className="text-5xl font-medium mt-4">{product.name}</h1>
+        <h1 className="text-4xl font-bold mt-4">{product.name}</h1>
         <p className="mt-5">{product.description}</p>
         <div className="bg-base-200 rounded-box mt-6 mb-2 flex justify-between items-center px-4 py-3">
           <b>Price: </b>
