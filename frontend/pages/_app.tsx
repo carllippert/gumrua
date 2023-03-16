@@ -39,11 +39,11 @@ function MyApp({
 }>) {
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        <SessionProvider session={pageProps.session} refetchInterval={0}>
-          <Component {...pageProps} />
-        </SessionProvider>
-      </RainbowKitProvider>
+      {/* <RainbowKitProvider chains={chains}> */}
+      <SessionProvider session={pageProps.session} refetchInterval={0}>
+        <Component {...pageProps} />
+      </SessionProvider>
+      {/* </RainbowKitProvider> */}
     </WagmiConfig>
   );
 }

@@ -1,6 +1,6 @@
 import logo from "../public/gumrua1.png";
 import Image from "next/image";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+// import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Header = () => {
   return (
@@ -11,7 +11,7 @@ const Header = () => {
         </a>
       </div>
       <div className="flex-none gap-2">
-        <ConnectButton />
+        {/* <ConnectButton /> */}
         {/* <div className="form-control">
           <input
             type="text"
