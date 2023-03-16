@@ -9,6 +9,7 @@ describe('Gumrua', () => {
 
   const productId = 0;
   const productName = 'My cool pdf';
+  const productSlug = 'my-cool-pdf';
   const productPrice = 100;
   const productImage =
     'https://public-files.gumroad.com/variants/utn8k57wknpyxf1zjp9ij0f8nvpv/e82ce07851bf15f5ab0ebde47958bb042197dbcdcae02aa122ef3f5b41e97c02';
@@ -24,7 +25,9 @@ describe('Gumrua', () => {
   describe('Create product', async () => {
     before(async () => {
       // Alice creates a product
-      const tx = await gumrua.connect(alice).createProduct(productName, productPrice, productImage);
+      const tx = await gumrua
+        .connect(alice)
+        .createProduct(productName, productSlug, productPrice, productImage);
       await tx.wait();
     });
 

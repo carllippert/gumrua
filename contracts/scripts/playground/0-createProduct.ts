@@ -16,9 +16,10 @@ async function main() {
   // Set data
   const price = ethers.utils.parseEther('100');
   const name = 'My cool pdf';
+  const slug = 'my-cool-pdf';
   const image =
     'https://public-files.gumroad.com/variants/utn8k57wknpyxf1zjp9ij0f8nvpv/e82ce07851bf15f5ab0ebde47958bb042197dbcdcae02aa122ef3f5b41e97c02';
-  const tx = await gumrua.connect(alice).createProduct(name, price, image);
+  const tx = await gumrua.connect(alice).createProduct(name, slug, price, image);
   const receipt = await tx.wait();
 
   const id = receipt.events?.find((e) => e.event === 'ProductCreated')?.args?._productId;

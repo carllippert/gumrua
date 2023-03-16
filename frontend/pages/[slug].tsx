@@ -3,12 +3,12 @@ import { useRouter } from "next/router";
 import Layout from "../components/layout";
 import { Spinner } from "../components/Spinner";
 import { useBuyProduct } from "../hooks/use-buy-product";
-import { useProduct } from "../hooks/use-product";
+import { useProductBySlug } from "../hooks/use-product-by-slug";
 
-const PurchaseInner = ({ productId }: { productId: number }) => {
+const PurchaseInner = ({ slug }: { slug: string }) => {
   const router = useRouter();
 
-  const { data: product } = useProduct(productId);
+  const { data: product } = useProductBySlug(slug);
   const { mutate: buyProduct } = useBuyProduct({
     onSuccess() {
       router.push(`/purchases`);
@@ -19,7 +19,7 @@ const PurchaseInner = ({ productId }: { productId: number }) => {
 
   const onBuyProduct = async () => {
     buyProduct({
-      id: productId,
+      id: product.id,
     });
   };
 
@@ -41,13 +41,11 @@ const PurchaseInner = ({ productId }: { productId: number }) => {
 
 const Purchase = () => {
   const router = useRouter();
-  const productId = Number(router.query.product_id?.toString());
+  const slug = router.query.slug?.toString();
 
-  console.log("Product ID: ", productId);
+  if (!slug) return null;
 
-  if (productId === undefined || Number.isNaN(productId)) return null;
-
-  return <PurchaseInner productId={productId} />;
+  return <PurchaseInner slug={slug} />;
 };
 
 export default Purchase;

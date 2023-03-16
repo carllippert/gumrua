@@ -23,6 +23,7 @@ export const useBoughtProducts = () => {
       products.push({
         id: id.toNumber(),
         name: product.name,
+        slug: product.slug,
         price: product.price,
         seller: product.seller as `0x${string}`,
         image: product.image,

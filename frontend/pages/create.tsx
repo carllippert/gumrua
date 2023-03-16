@@ -1,4 +1,4 @@
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Container from "../components/container";
@@ -6,6 +6,7 @@ import Layout from "../components/layout";
 import UploadImage from "../components/uploadImage";
 import UploadPdf from "../components/uploadPdf";
 import { useCreateProduct } from "../hooks/use-create-product";
+import slugify from "slugify";
 
 const Create = () => {
   const router = useRouter();
@@ -22,17 +23,17 @@ const Create = () => {
       setPrice("");
 
       if (!receipt) return;
-      const productId = receipt.events?.find(
-        (e) => e.event === "ProductCreated"
-      )?.args?._productId;
+      const slug = receipt.events?.find((e) => e.event === "ProductCreated")
+        ?.args?._slug;
 
-      router.push(`/${productId.toNumber()}`);
+      router.push(`/${slug}`);
     },
   });
 
   const onCreateProduct = async () => {
     createProduct({
       name,
+      slug: slugify(name),
       price: ethers.utils.parseEther(price),
       image: imageUrl,
     });
