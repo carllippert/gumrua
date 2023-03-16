@@ -1,20 +1,16 @@
-import hre, { ethers } from "hardhat";
-import {
-  ConfigProperty,
-  setDeploymentProperty,
-} from "../.deployment/deploymentManager";
+import hre, { ethers } from 'hardhat';
+import { ConfigProperty, setDeploymentProperty } from '../.deployment/deploymentManager';
 
 async function main() {
   const network = hre.network.name;
-  console.log("Network:", network);
+  console.log('Network:', network);
 
-  const Storage = await ethers.getContractFactory("Storage");
-  const storage = await Storage.deploy("Initial message");
+  const GumruaProduct = await ethers.getContractFactory('GumruaProduct');
+  const gumruaProduct = await GumruaProduct.deploy();
+  await gumruaProduct.deployed();
 
-  await storage.deployed();
-
-  console.log("Deployed Storage at", storage.address);
-  setDeploymentProperty(network, ConfigProperty.Storage, storage.address);
+  console.log('Deployed Storage at', gumruaProduct.address);
+  setDeploymentProperty(network, ConfigProperty.GumruaProduct, gumruaProduct.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

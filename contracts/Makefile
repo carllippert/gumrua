@@ -8,5 +8,5 @@ deploy:
 
 #-------------- PLAYGROUND ----------------#
 
-set-data:
-	npx hardhat run scripts/playground/setData.ts --network $(NETWORK)
+create-product:
+	npx hardhat run scripts/playground/0-createProduct.ts --network $(NETWORK)
