@@ -79,7 +79,7 @@ const Create = () => {
             <Label>Content</Label>
             <UploadPdf
               slug={"test-slug"}
-              disabled={true}
+              // disabled={true}
               onUpload={(url: string) => {
                 setPdfUrl(url);
               }}

@@ -12,10 +12,12 @@ const UploadPdf = ({
   onUpload,
 }: {
   slug: string;
-  disabled: boolean;
+  disabled?: boolean;
   onUpload: (url: string) => void;
 }) => {
   const [uploading, setUploading] = useState(false);
+  const [fileName, setFileName] = useState("");
+
   const { address } = useAccount();
   const uploadPdf: React.ChangeEventHandler<HTMLInputElement> = async (
     event
@@ -28,6 +30,8 @@ const UploadPdf = ({
       }
 
       const file = event.target.files[0];
+      setFileName(file.name);
+
       const fileExt = file.name.split(".").pop();
       //just creating a random number to add to the file name
       const linuxTimestamp = Math.floor(Date.now() / 1000);
