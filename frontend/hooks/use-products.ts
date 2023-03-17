@@ -2,15 +2,16 @@ import { useAccount, useQuery } from "wagmi";
 import { Product } from "../types/products";
 import { useGumrua } from "./use-gumrua";
 
-export const useBoughtProducts = () => {
+export const useProducts = () => {
   const { address } = useAccount();
   const gumrua = useGumrua();
 
-  return useQuery<Product[]>(["bought-products", address], async () => {
+  return useQuery<Product[]>(["products", address], async () => {
     if (!gumrua || !address) return [];
 
+    /* Get requests */
     const products: Product[] = [];
-    const eventFilter = gumrua.filters.ProductBought(null, address);
+    const eventFilter = gumrua.filters.ProductCreated();
     const events = await gumrua.queryFilter(eventFilter);
 
     for (const event of events) {

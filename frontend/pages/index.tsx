@@ -12,7 +12,13 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <div className="w-full md:ml-6 md:pr-6 pl-1">
-        <Image src={logo} width="1500" height="280" alt="gumrua logo" />
+        <Image
+          src={logo}
+          width="1500"
+          height="280"
+          alt="gumrua logo"
+          priority
+        />
       </div>
 
       <Navbar currentPage="index" />
@@ -62,6 +68,7 @@ const Home: NextPage = () => {
               height="500"
               alt="gumrua logo"
               className=""
+              priority
             ></Image>
           </div>
         </div>

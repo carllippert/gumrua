@@ -14,7 +14,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
           README
         </a>
         <Link href="/dashboard">
-          <div className="text-center pt-6 text-black font-2xl hover:underline hover:underline-offset-4 h-full w-32">
+          <div className="text-center pt-6 text-black font-2xl cursor-pointer hover:underline hover:underline-offset-4 h-full w-32">
             Dashboard
           </div>
         </Link>
@@ -23,9 +23,14 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
             Sales
           </div>
         </Link> */}
+        <Link href="/catalog">
+          <div className="text-center pt-6 text-black font-2xl cursor-pointer hover:underline hover:underline-offset-4 h-full w-32">
+            Catalog
+          </div>
+        </Link>
         {currentPage !== "index" ? (
           <Link href="/">
-            <div className="text-center pt-6 text-black font-2xl hover:underline hover:underline-offset-4 h-full w-32">
+            <div className="text-center pt-6 text-black font-2xl cursor-pointer hover:underline hover:underline-offset-4 h-full w-32">
               Home
             </div>
           </Link>

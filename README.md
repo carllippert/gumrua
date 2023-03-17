@@ -1,4 +1,4 @@
-![Example PDF](frontend/public/gumrua.png)
+![Example PDF](frontend/public/gumrua_seo.png)
 
 ## Web3 Gumroad.
 

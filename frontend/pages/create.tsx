@@ -13,6 +13,7 @@ import { TextArea } from "../components/basic/textarea";
 import { useForm } from "react-hook-form";
 import UploadFile from "../components/basic/upload-file";
 import Navbar from "../components/navbar";
+import { useAccount } from "wagmi";
 
 interface LoginFields {
   name: string;
@@ -22,6 +23,7 @@ interface LoginFields {
 
 const Create = () => {
   const router = useRouter();
+  const { address } = useAccount();
 
   const {
     register,
@@ -62,7 +64,7 @@ const Create = () => {
   return (
     <Layout>
       <Navbar currentPage="create" />
-      <Container className="mt-10">
+      <Container className="mt-10 pb-10">
         <h1 className="text-4xl font-bold mb-4">Create new product</h1>
         <form className="flex flex-col gap-2" onSubmit={onSubmit}>
           <Input
@@ -87,28 +89,35 @@ const Create = () => {
             })}
             error={errors.description?.message}
           />
-          <div>
-            <Label>Image</Label>
-            <UploadFile
-              file={image}
-              setFile={setImage}
-              fileTypes="PDF, SVG, PNG, JPG or GIF"
-              accept="image/*"
-            />
+          <div className="flex gap-4 flex-col sm:flex-row">
+            <div className="flex-1">
+              <Label>Image</Label>
+              <UploadFile
+                file={image}
+                setFile={setImage}
+                fileTypes="PDF, SVG, PNG, JPG or GIF"
+                accept="image/*"
+              />
+            </div>
+            <div className="flex-1">
+              <Label>Content</Label>
+              <UploadFile
+                file={pdf}
+                setFile={setPdf}
+                accept="application/pdf"
+              />
+            </div>
           </div>
-          <div>
-            <Label>Content</Label>
-            <UploadFile file={pdf} setFile={setPdf} accept="application/pdf" />
-          </div>
+
           <Button
             className="mt-2 tracking-wider"
             size="lg"
             block
             type="submit"
             loading={isLoading}
-            disabled={!image || !pdf || isLoading}
+            disabled={!image || !pdf || isLoading || !address}
           >
-            Publish
+            {address ? "Publish" : "Login to start selling"}
           </Button>
         </form>
       </Container>
