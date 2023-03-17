@@ -159,21 +159,16 @@ export class MoneriumAdapter implements SafeOnRampClient {
   async offRamp(options: SafeOffRampOptions) {
     if (!this.client) return;
 
-    const iban = await this.getIban();
-    if (!iban) return;
-
     const order = await this.client.placeOrder({
       chain: Chain.gnosis,
       network: Network.chiado,
       message: options.message,
       signature: options.signature,
       address: options.address,
-      amount: "10",
-      kind: OrderKind.issue,
+      amount: options.amount.toString(),
+      kind: OrderKind.redeem,
       memo: "",
       currency: Currency.eur,
-      // accountId: "5a6f3a37-c49e-11ed-a453-e6504c27bfa9",
-      // accountId: "903c4a3e-c49e-11ed-a453-e6504c27bfa9",
       counterpart: {
         details: {
           firstName: "Test",
@@ -181,10 +176,12 @@ export class MoneriumAdapter implements SafeOnRampClient {
         },
         identifier: {
           standard: PaymentStandard.iban,
-          iban,
+          iban: options.iban,
         },
       },
     });
+
+    console.log("Order: ", order);
   }
 
   /**

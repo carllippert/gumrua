@@ -15,6 +15,8 @@ export interface SafeOffRampOptions {
   address: string;
   message: string;
   signature: string;
+  iban: string;
+  amount: number;
 }
 
 // @ts-ignore

@@ -14,7 +14,7 @@ interface OnRampState {
   iban: string | undefined;
   loading: boolean;
   connect: () => Promise<void>;
-  offRamp: (amount: number) => Promise<void>;
+  offRamp: (iban: string, amount: number) => Promise<void>;
 }
 
 const OnRampContext = createContext<OnRampState | undefined>(undefined);
@@ -60,7 +60,7 @@ export const OnRampProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const offRamp = async (amount: number) => {
+  const offRamp = async (iban: string, amount: number) => {
     if (!safeOnRamp || !address) return;
 
     const message = `Send EUR ${amount} to ${iban} at ${new Date().toISOString()}`;
@@ -72,6 +72,8 @@ export const OnRampProvider = ({ children }: { children: ReactNode }) => {
       address,
       message,
       signature,
+      iban,
+      amount,
     });
   };
 
