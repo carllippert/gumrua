@@ -2,7 +2,10 @@ import {
   SafeOnRampClient,
   SafeOnRampOpenOptions,
 } from "@safe-global/onramp-kit/dist/src/types/index";
-import { MoneriumClient, Chain, Network, Profile } from "@monerium/sdk";
+import { MoneriumClient, Chain, Network } from "@monerium/sdk";
+
+const CODE_CHALLENGE = "9Y__uhKapn7GO_ElcaQpd8C3hdOyqTzAU4VXyR2iEV0";
+const CODE_VERIFIER = "12345678901234567890123456789012345678901234567890";
 
 export interface MoneriumProviderConfig {
   onRampProviderConfig: {
@@ -57,7 +60,7 @@ export class MoneriumAdapter implements SafeOnRampClient {
           await this.client.auth({
             client_id: process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID || "",
             code,
-            code_verifier: "12345678901234567890123456789012345678901234567890",
+            code_verifier: CODE_VERIFIER,
             redirect_uri: "http://localhost:3000/",
           });
 
@@ -95,10 +98,7 @@ export class MoneriumAdapter implements SafeOnRampClient {
       });
 
       const href = new URL(authFlowUrl);
-      href.searchParams.set(
-        "code_challenge",
-        "9Y__uhKapn7GO_ElcaQpd8C3hdOyqTzAU4VXyR2iEV0"
-      );
+      href.searchParams.set("code_challenge", CODE_CHALLENGE);
 
       window.location.href = href.toString();
     } catch {
