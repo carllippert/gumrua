@@ -1,8 +1,12 @@
-![Example PDF](frontend/public/gumrua.svg)
+![Example PDF](frontend/public/gumrua.png)
 
 ## Web3 Gumroad.
 
-[Gumraod](https://gumroad.com/) is the easiest way to sell digital content. It's popular because of its simplicity. We recreated with Gumroad with crypto at its core with the top priority being UX and simplicity for new users to onboard the next billion into web3.
+[Gumraod](https://gumroad.com/) is the easiest way to sell digital content.
+
+It's popular because of its simplicity.
+
+We recreated with Gumroad with crypto at its core with the top priority being UX and simplicity for new users to onboard the next billion into web3.
 
 #### How it works:
 
@@ -23,8 +27,8 @@ File Storage (web2):
 [Supabase](https://supabase.com/)
 
 Authentication:  
-[SIWE - Sign In With Ethereum](https://docs.login.xyz/integrations/nextauth.js)
-[@rainbow-me/rainbowkit-siwe-next-auth](https://www.npmjs.com/package/@rainbow-me/rainbowkit-siwe-next-auth)
+[SIWE - Sign In With Ethereum](https://docs.login.xyz/integrations/nextauth.js)  
+[@rainbow-me/rainbowkit-siwe-next-auth](https://www.npmjs.com/package/@rainbow-me/rainbowkit-siwe-next-auth)  
 [next-auth](https://next-auth.js.org/)
 
 Smart Contract Interaction Client Side:  
@@ -41,3 +45,6 @@ Smart Contract Developement Framework:
 
 NFT Standard:  
 [EIP 1155](https://eips.ethereum.org/EIPS/eip-1155)
+
+Blockchain:  
+[Gnosis](https://www.gnosis.io/)
