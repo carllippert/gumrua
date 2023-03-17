@@ -8,14 +8,14 @@ It's popular because of its simplicity.
 
 We recreated with Gumroad with crypto at its core with the top priority being UX and simplicity for new users to onboard the next billion into web3.
 
-#### How it works:
+### How it works:
 
 1. Seller provides a file + cover image + name + price
 2. Seller receives link
 3. Seller shares link
 4. Seller receive sales 🎉
 
-#### Tech Stack:
+### Tech Stack:
 
 React Framework:  
 [NextJS](https://nextjs.org/)
@@ -54,3 +54,32 @@ NFT Standard:
 
 Blockchain:  
 [Gnosis](https://www.gnosis.io/)
+
+### Hackathon Submission
+
+### Video Demo
+
+### Team
+
+#### Carl Lippert
+
+[Twitter](https://twitter.com/carllippert)
+[LinkedIn](https://www.linkedin.com/in/carllippert/)
+[Githbu](https://github.com/carllippert)
+
+#### Mattia Pomelli
+
+[Twitter](https://twitter.com/mattiapomelli)
+[LinkedIn](https://www.linkedin.com/in/mattia-pomelli-b857511b1/)
+[Github](https://github.com/mattiapomelli)
+
+#### Why we built this
+
+We both are contributors at [TalentLayer](https://www.talentlayer.org/) an open system for building labor marketplaces on chain.
+
+The economy is essentially made up of goods and services.
+
+TalentLayer is usefull for services.
+We are both now exploring goods.
+
+Gumrua is a small exploration of consumer tools built with crypto for selling goods for the first [ETHPorto](https://ethporto.org/) hackathon.
