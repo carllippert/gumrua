@@ -53,7 +53,7 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
         <p className="mt-5">{product.description}</p>
         <div className="bg-base-200 rounded-box mt-6 mb-2 flex justify-between items-center px-4 py-3">
           <b>Price: </b>
-          <span>{ethers.utils.formatEther(product.price)} xDAI</span>
+          <span>{ethers.utils.formatEther(product.priceEuro)} EURe</span>
         </div>
         {address === product.seller ? (
           <CopyButton
