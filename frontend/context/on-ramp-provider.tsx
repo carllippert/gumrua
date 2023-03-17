@@ -1,0 +1,103 @@
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { SafeOnRampKit, SafeOnRampProviderType } from "@safe-global/onramp-kit";
+
+import {
+  MoneriumAdapter,
+  MoneriumProviderConfig,
+} from "../utils/monerium-adapter";
+import { useAccount } from "wagmi";
+
+declare module "@safe-global/onramp-kit" {
+  export enum SafeOnRampProviderType {
+    Monerium = 1,
+  }
+}
+
+// @ts-ignore
+class PatchedSafeOnRampKit extends SafeOnRampKit {
+  static async init(
+    providerType: SafeOnRampProviderType,
+    config: MoneriumProviderConfig
+  ): Promise<SafeOnRampKit> {
+    let client;
+    switch (providerType) {
+      case SafeOnRampProviderType.Monerium:
+        client = new MoneriumAdapter(config);
+        break;
+      default:
+        throw new Error("Provider type not supported");
+    }
+    await client.init();
+    return new SafeOnRampKit(client);
+  }
+}
+
+interface OnRampState {
+  iban: string | undefined;
+  loading: boolean;
+  connect: () => Promise<void>;
+}
+
+const OnRampContext = createContext<OnRampState | undefined>(undefined);
+
+export const OnRampProvider = ({ children }: { children: ReactNode }) => {
+  const { address } = useAccount();
+
+  const [loading, setLoading] = useState(true);
+  const [safeOnRamp, setSafeOnRamp] = useState<SafeOnRampKit>();
+  const [iban, setIban] = useState<string>();
+
+  useEffect(() => {
+    const initSafeOnRamp = async () => {
+      const safeOnRamp = await PatchedSafeOnRampKit.init(
+        SafeOnRampProviderType.Monerium,
+        {
+          onRampProviderConfig: {
+            events: {
+              onLoaded(iban) {
+                setIban(iban);
+                setLoading(false);
+              },
+            },
+          },
+        }
+      );
+
+      setSafeOnRamp(safeOnRamp);
+    };
+
+    initSafeOnRamp();
+  }, []);
+
+  const onConnect = async () => {
+    if (!safeOnRamp || !address) return;
+
+    await safeOnRamp.open({
+      element: "",
+      walletAddress: address,
+      networks: [],
+    });
+  };
+
+  return (
+    <OnRampContext.Provider value={{ iban, loading, connect: onConnect }}>
+      {children}
+    </OnRampContext.Provider>
+  );
+};
+
+export const useOnRamp = () => {
+  const context = useContext(OnRampContext);
+
+  if (context === undefined) {
+    throw new Error("useApiClient must be used within an AuthProvider");
+  }
+
+  return context;
+};

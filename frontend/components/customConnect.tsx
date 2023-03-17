@@ -36,7 +36,7 @@ const CustomConnect = () => {
                   <button
                     onClick={openConnectModal}
                     type="button"
-                    className="text-black border-l-2 border-black font-3xl h-full w-40 hover:bg-[#ff90e8]"
+                    className="text-black border-l-2 border-black font-3xl h-full lg:w-40 w-24 hover:bg-[#ff90e8]"
                   >
                     Login
                   </button>

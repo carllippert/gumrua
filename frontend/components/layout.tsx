@@ -13,8 +13,8 @@ const Layout = ({ children }: { children: any }) => {
         />
       </Head>
       {/* <Header /> */}
-      <div>{children}</div>
-      <footer className="h-32">Footer</footer>
+      <main className="flex-1">{children}</main>
+      {/* <footer className="h-32">Footer</footer> */}
     </div>
   );
 };

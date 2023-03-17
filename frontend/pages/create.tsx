@@ -12,6 +12,7 @@ import { TextArea } from "../components/basic/textarea";
 
 import { useForm } from "react-hook-form";
 import UploadFile from "../components/basic/upload-file";
+import Navbar from "../components/navbar";
 
 interface LoginFields {
   name: string;
@@ -60,6 +61,7 @@ const Create = () => {
 
   return (
     <Layout>
+      <Navbar currentPage="create" />
       <Container className="mt-10">
         <h1 className="text-4xl font-bold mb-4">Create new product</h1>
         <form className="flex flex-col gap-2" onSubmit={onSubmit}>

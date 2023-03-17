@@ -6,6 +6,7 @@ import Layout from "../components/layout";
 import Link from "next/link";
 import { Button } from "../components/basic/button";
 import CustomConnect from "../components/customConnect";
+import Navbar from "../components/navbar";
 
 const Home: NextPage = () => {
   return (
@@ -14,7 +15,8 @@ const Home: NextPage = () => {
         <Image src={logo} width="1500" height="280" alt="gumrua logo" />
       </div>
 
-      <div className="border-y-2 border-solid border-black h-20">
+      <Navbar currentPage="index" />
+      {/* <div className="border-y-2 border-solid border-black h-20">
         <div className="flex flex-row h-full justify-center">
           <a
             href="https://github.com/carllippert/gumrua"
@@ -32,7 +34,7 @@ const Home: NextPage = () => {
             </button>
           </Link>
         </div>
-      </div>
+      </div> */}
       {/* Hero */}
       <div className="flex lg:h-[550px] h-[1100px] m-0 w-full bg-blue-200 flex-col p-0 gap-0 lg:flex-row border-solid border-black border-b-2">
         <div className="flex-1 w-full h-full bg-[#ff90e8] border-b-2 lg:border-b-0 border-black border-solid lg:border-r-2">
