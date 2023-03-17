@@ -11,6 +11,7 @@ import {
   MoneriumAdapter,
   MoneriumProviderConfig,
 } from "../utils/monerium-adapter";
+import { useAccount } from "wagmi";
 
 declare module "@safe-global/onramp-kit" {
   export enum SafeOnRampProviderType {
@@ -45,6 +46,8 @@ interface OnRampState {
 const OnRampContext = createContext<OnRampState | undefined>(undefined);
 
 export const OnRampProvider = ({ children }: { children: ReactNode }) => {
+  const { address } = useAccount();
+
   const [safeOnRamp, setSafeOnRamp] = useState<SafeOnRampKit>();
   const [iban, setIban] = useState<string>();
 
@@ -70,11 +73,11 @@ export const OnRampProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const onConnect = async () => {
-    if (!safeOnRamp) return;
+    if (!safeOnRamp || !address) return;
 
     await safeOnRamp.open({
       element: "",
-      walletAddress: "",
+      walletAddress: address,
       networks: [],
     });
   };
