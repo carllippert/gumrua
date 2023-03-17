@@ -11,7 +11,6 @@ import { useOnRamp } from "../context/on-ramp-provider";
 
 import cx from "classnames";
 import { Input } from "../components/basic/input";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface BalanceBannerProps {
@@ -52,12 +51,11 @@ const IbanBanner = () => {
   return (
     <div
       className={cx(
-        "bg-secondary/20 px-4 py-4 flex gap-4 items-center",
-        iban ? "justify-center" : "justify-between"
+        "bg-secondary/20 px-4 py-4 gap-4 flex flex-col items-center"
       )}
     >
       {iban ? (
-        <div className="flex flex-col items-center">
+        <>
           <p>Get crypto by sending a bank transfer to this IBAN</p>
           <p className="text-center mt-2">
             <span className="font-bold text-xl">{iban}</span>
@@ -70,10 +68,10 @@ const IbanBanner = () => {
           >
             <Button>Send bank transfer</Button>
           </a>
-        </div>
+        </>
       ) : (
         <>
-          <p>
+          <p className="text-center">
             Create an IBAN to simplify your experience on Gumrua. As a buyer,
             you can obtain crypto by simply sending a bank transfer to this
             IBAN.

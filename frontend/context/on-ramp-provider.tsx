@@ -29,6 +29,8 @@ export const OnRampProvider = ({ children }: { children: ReactNode }) => {
   const { signMessageAsync } = useSignMessage();
 
   useEffect(() => {
+    if (!address) return;
+
     const initSafeOnRamp = async () => {
       const safeOnRamp = await ExtendedSafeOnRampKit.init(
         SafeOnRampProviderType.Monerium,
@@ -40,6 +42,9 @@ export const OnRampProvider = ({ children }: { children: ReactNode }) => {
                 setLoading(false);
               },
             },
+            getConnectedWalletAddress() {
+              return address;
+            },
           },
         }
       );
@@ -48,7 +53,7 @@ export const OnRampProvider = ({ children }: { children: ReactNode }) => {
     };
 
     initSafeOnRamp();
-  }, []);
+  }, [address]);
 
   const onConnect = async () => {
     if (!safeOnRamp || !address) return;
