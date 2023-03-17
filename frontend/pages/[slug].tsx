@@ -1,23 +1,19 @@
 import { ethers } from "ethers";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useAccount, useToken } from "wagmi";
+import { useAccount } from "wagmi";
 import { Button } from "../components/basic/button";
 import Layout from "../components/layout";
 import { Spinner } from "../components/basic/spinner";
 import { useBuyProduct } from "../hooks/use-buy-product";
 import { useProductBySlug } from "../hooks/use-product-by-slug";
-import { copyToClipboard } from "../utils/copy-to-clipboard";
-import { DocumentDuplicateIcon, CheckIcon } from "@heroicons/react/24/outline";
 import Container from "../components/container";
 import { CopyButton } from "../components/copy-button";
+import Link from "next/link";
 
 const PurchaseInner = ({ slug }: { slug: string }) => {
   const { address } = useAccount();
   const router = useRouter();
-
-  const [copied, setCopied] = useState(false);
 
   const { data: product } = useProductBySlug(slug);
   const { mutate: buyProduct } = useBuyProduct({
@@ -32,14 +28,6 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
     buyProduct({
       id: product.id,
     });
-  };
-
-  const onCopyLink = () => {
-    copyToClipboard(window.location.href);
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
   };
 
   return (
@@ -69,14 +57,27 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
             label="Copy link"
           />
         ) : (
-          <Button
-            className="mt-2 tracking-wider"
-            size="lg"
-            block
-            onClick={onBuyProduct}
-          >
-            Buy
-          </Button>
+          <div>
+            <Button
+              className="mt-2 tracking-wider"
+              size="lg"
+              block
+              onClick={onBuyProduct}
+            >
+              Buy
+            </Button>
+            <div className="divider"></div>
+            <div className="mt-4 flex-col flex w-full">
+              <p className="mb-2 text-center">Running low on crypto?</p>
+              <Link href="/buy-crypto">
+                <a>
+                  <Button color="secondary" block>
+                    Buy crypto
+                  </Button>
+                </a>
+              </Link>
+            </div>
+          </div>
         )}
       </Container>
     </Layout>
