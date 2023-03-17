@@ -11,6 +11,7 @@ import { useProductBySlug } from "../hooks/use-product-by-slug";
 import { copyToClipboard } from "../utils/copy-to-clipboard";
 import { DocumentDuplicateIcon, CheckIcon } from "@heroicons/react/24/outline";
 import Container from "../components/container";
+import { CopyButton } from "../components/copy-button";
 
 const PurchaseInner = ({ slug }: { slug: string }) => {
   const { address } = useAccount();
@@ -60,21 +61,13 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
           <span>{ethers.utils.formatEther(product.price)} xDAI</span>
         </div>
         {address === product.seller ? (
-          <Button
+          <CopyButton
+            text={window.location.href}
             className="mt-2 tracking-wider"
             size="lg"
             block
-            onClick={onCopyLink}
-            rightIcon={
-              copied ? (
-                <CheckIcon className="h-5 w-5" />
-              ) : (
-                <DocumentDuplicateIcon className="h-5 w-5" />
-              )
-            }
-          >
-            {copied ? "Copied!" : "Copy link"}
-          </Button>
+            label="Copy link"
+          />
         ) : (
           <Button
             className="mt-2 tracking-wider"
