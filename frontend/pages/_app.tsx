@@ -5,7 +5,7 @@ import type { AppProps } from "next/app";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { RainbowKitSiweNextAuthProvider } from "@rainbow-me/rainbowkit-siwe-next-auth";
 
-import { gnosis, gnosisChiado, goerli, hardhat } from "wagmi/chains";
+import { gnosis, gnosisChiado, hardhat } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
