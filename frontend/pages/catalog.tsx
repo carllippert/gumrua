@@ -26,7 +26,7 @@ const Catalog = () => {
   return (
     <div className="grid-cols-1 grid gap-6 md:grid-cols-2">
       {products?.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} linkToPage />
       ))}
     </div>
   );

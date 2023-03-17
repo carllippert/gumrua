@@ -4,12 +4,14 @@ import { useAccount, useNetwork } from "wagmi";
 import { Product } from "../types/products";
 import { Button } from "./basic/button";
 import { CopyButton } from "./copy-button";
+import Link from "next/link";
 
 interface ProductCardProps {
   product: Product;
+  linkToPage?: boolean;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, linkToPage }: ProductCardProps) => {
   const { address } = useAccount();
   const { chain } = useNetwork();
 
@@ -77,27 +79,36 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <h4 className="font-semibold text-xl mt-3">{product.name}</h4>
         <p className="mt-2 text-base-content/80">{product.description}</p>
       </div>
-
-      {address === product.seller ? (
-        <CopyButton
-          text={`${window.location.origin}/${product.slug}`}
-          className="mt-2"
-          // size="lg"
-          block
-          label="Copy link"
-        />
+      {linkToPage ? (
+        <Link href={`/${product.slug}`}>
+          <a>
+            <Button block>View</Button>
+          </a>
+        </Link>
       ) : (
-        // <a
-        //   href={link ? link : ""}
-        //   target="_blank"
-        //   rel="noopener noreferrer"
-        //   // download={`${product.slug}`}
-        //   // download
-        // >
-        <Button disabled={loading} onClick={download} loading={loading}>
-          {fetching ? "Fetching..." : "Download"}
-        </Button>
-        // </a>
+        <>
+          {address === product.seller ? (
+            <CopyButton
+              text={`${window.location.origin}/${product.slug}`}
+              className="mt-2"
+              // size="lg"
+              block
+              label="Copy link"
+            />
+          ) : (
+            // <a
+            //   href={link ? link : ""}
+            //   target="_blank"
+            //   rel="noopener noreferrer"
+            //   // download={`${product.slug}`}
+            //   // download
+            // >
+            <Button disabled={loading} onClick={download} loading={loading}>
+              {fetching ? "Fetching..." : "Download"}
+            </Button>
+            // </a>
+          )}
+        </>
       )}
     </div>
   );
