@@ -1,6 +1,8 @@
+import Link from "next/link";
 import { Spinner } from "../components/basic/spinner";
 import { ProductCard } from "../components/product-card";
 import { useBoughtProducts } from "../hooks/use-bought-products";
+import { Button } from "./basic/button";
 
 export const PurchasedProducts = () => {
   const { data: boughtProducts, isLoading } = useBoughtProducts();
@@ -15,8 +17,13 @@ export const PurchasedProducts = () => {
 
   if (boughtProducts?.length === 0)
     return (
-      <div className="flex justify-center my-14">
+      <div className="flex my-14 flex-col gap-3 items-center">
         <p>No products purchased yet</p>
+        <Link href="/catalog">
+          <a>
+            <Button>Explore products</Button>
+          </a>
+        </Link>
       </div>
     );
 

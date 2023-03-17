@@ -41,7 +41,7 @@ const ProductInfo = ({ product }: { product: Product }) => {
 
   return (
     <>
-      <div className="relative h-40 rounded-box overflow-hidden">
+      <div className="relative h-40 rounded-box overflow-hidden mt-20">
         <Image
           src={product.image}
           layout="fill"

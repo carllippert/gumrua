@@ -12,6 +12,8 @@ import { PurchasedProducts } from "../components/purchased-products";
 import { EURE_TOKEN_ADDRESS } from "../constants/addresses";
 import { useOnRamp } from "../context/on-ramp-provider";
 
+import cx from "classnames";
+
 const BalanceBanner = () => {
   const { address } = useAccount();
   const { chain } = useNetwork();
@@ -57,13 +59,26 @@ const IbanBanner = () => {
   }
 
   return (
-    <div className="bg-secondary/20 px-4 py-4 flex justify-between gap-4 items-center">
+    <div
+      className={cx(
+        "bg-secondary/20 px-4 py-4 flex gap-4 items-center",
+        iban ? "justify-center" : "justify-between"
+      )}
+    >
       {iban ? (
-        <div>
-          <p>
-            Your IBAN: <span className="font-bold">{iban}</span>
+        <div className="flex flex-col items-center">
+          <p>Get crypto by sending a bank transfer to this IBAN</p>
+          <p className="text-center mt-2">
+            <span className="font-bold text-xl">{iban}</span>
           </p>
-          <p>You can obtain crypto by sending a bank transfer to this IBAN</p>
+          <a
+            href="https://sandbox.monerium.dev/mockbank"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4"
+          >
+            <Button>Send bank transfer</Button>
+          </a>
         </div>
       ) : (
         <>
