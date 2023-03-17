@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Header from "./header";
+import { NextSeo } from "next-seo";
 
 const Layout = ({ children }: { children: any }) => {
   return (
@@ -12,6 +13,27 @@ const Layout = ({ children }: { children: any }) => {
           rel="icon"
         />
       </Head>
+      <NextSeo
+        title="Gumrua"
+        openGraph={{
+          title: "Gumrua",
+          description: "web3 gumroad",
+          images: [
+            {
+              url: "https://qqhuhpdwqoguhxekruva.supabase.co/storage/v1/object/public/public/gumrua_seo.png",
+              width: 1200,
+              height: 630,
+              alt: "Og Image Alt",
+              type: "image/jpeg",
+            },
+          ],
+          siteName: "Gumrua",
+        }}
+        twitter={{
+          cardType: "summary_large_image",
+        }}
+      />
+
       {/* <Header /> */}
       <main className="flex-1">{children}</main>
       {/* <footer className="h-32">Footer</footer> */}
