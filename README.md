@@ -2,7 +2,7 @@
 
 ## Web3 Gumroad.
 
-[Gumraod](https://gumroad.com/) is the easiest way to sell digital content.
+[Gumroad](https://gumroad.com/) is the easiest way to sell digital content.
 
 It's popular because of its simplicity.
 
@@ -10,15 +10,21 @@ We recreated with Gumroad with crypto at its core with the top priority being UX
 
 #### How it works:
 
-1. Provide a file + cover image + name + price;
-2. Receive Link
-3. Share link
-4. Receive Sales 🎉
+1. Seller provides a file + cover image + name + price
+2. Seller receives link
+3. Seller shares link
+4. Seller receive sales 🎉
 
 #### Tech Stack:
 
 React Framework:  
 [NextJS](https://nextjs.org/)
+
+CSS Framework:  
+[Tailwind CSS](https://tailwindcss.com/)
+
+Component Kit:  
+[Daisy UI](https://daisyui.com/)
 
 Deployment:  
 [Vercel](https://vercel.com/)
