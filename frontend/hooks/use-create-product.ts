@@ -4,9 +4,11 @@ import { uploadImage, uploadPdf } from "../utils/upload-file";
 
 import { useGumrua } from "./use-gumrua";
 
+const EURO_TO_DAI = 107;
+
 export interface CreateProductData {
   name: string;
-  price: BigNumber;
+  price: BigNumber; // price in euro
   image: File;
   pdf: File;
   slug: string;
@@ -35,10 +37,12 @@ export const useCreateProduct = (options?: UseCreateProductOptions) => {
 
       await uploadPdf(pdf, slug);
 
+      const priceDai = price.mul(EURO_TO_DAI).div(100);
       const tx = await gumrua.createProduct(
         name,
         slug,
         description,
+        priceDai,
         price,
         imageUrl
       );

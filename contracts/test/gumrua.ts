@@ -2,6 +2,7 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
 import { ContractTransaction } from 'ethers';
 import { ethers } from 'hardhat';
+import { EURE_TOKEN_ADDRESS } from '../constants/addresses';
 import { Gumrua } from '../typechain-types';
 
 describe('Gumrua', () => {
@@ -13,6 +14,7 @@ describe('Gumrua', () => {
   const productDescription =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, velit rerum reprehenderit natus omnis eligendi iure amet fugit assumenda cumque id ad qui quos alias odit iusto provident. Nostrum accusamus quae iure quod maiores!';
   const productPrice = 100;
+  const productPriceEuro = 94;
   const productImage =
     'https://public-files.gumroad.com/variants/utn8k57wknpyxf1zjp9ij0f8nvpv/e82ce07851bf15f5ab0ebde47958bb042197dbcdcae02aa122ef3f5b41e97c02';
 
@@ -20,7 +22,7 @@ describe('Gumrua', () => {
     [deployer, alice, bob] = await ethers.getSigners();
 
     const Gumrua = await ethers.getContractFactory('Gumrua');
-    gumrua = await Gumrua.deploy();
+    gumrua = await Gumrua.deploy(EURE_TOKEN_ADDRESS);
     await gumrua.deployed();
   });
 
@@ -29,7 +31,14 @@ describe('Gumrua', () => {
       // Alice creates a product
       const tx = await gumrua
         .connect(alice)
-        .createProduct(productName, productSlug, productDescription, productPrice, productImage);
+        .createProduct(
+          productName,
+          productSlug,
+          productDescription,
+          productPrice,
+          productPriceEuro,
+          productImage,
+        );
       await tx.wait();
     });
 
@@ -68,10 +77,11 @@ describe('Gumrua', () => {
 
   describe('Update product price', async () => {
     const newPrice = 200;
+    const newPriceEuro = 188;
 
     before(async () => {
       // Alice updates her product price
-      const tx = await gumrua.connect(alice).updateProductPrice(productId, newPrice);
+      const tx = await gumrua.connect(alice).updateProductPrice(productId, newPrice, newPriceEuro);
       await tx.wait();
     });
 
@@ -81,7 +91,7 @@ describe('Gumrua', () => {
     });
 
     it('Only the owner can update the product price', async () => {
-      const tx = gumrua.connect(bob).updateProductPrice(productId, newPrice);
+      const tx = gumrua.connect(bob).updateProductPrice(productId, newPrice, newPriceEuro);
       expect(tx).to.be.revertedWith('Only seller can update price');
     });
   });

@@ -15,13 +15,16 @@ async function main() {
 
   // Set data
   const price = ethers.utils.parseEther('100');
-  const name = 'My cool pdf';
-  const slug = 'my-cool-pdf';
+  const priceEuro = ethers.utils.parseEther('94');
+  const name = 'Test';
+  const slug = 'test';
   const description =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, velit rerum reprehenderit natus omnis eligendi iure amet fugit assumenda cumque id ad qui quos alias odit iusto provident. Nostrum accusamus quae iure quod maiores!';
   const image =
-    'https://public-files.gumroad.com/variants/utn8k57wknpyxf1zjp9ij0f8nvpv/e82ce07851bf15f5ab0ebde47958bb042197dbcdcae02aa122ef3f5b41e97c02';
-  const tx = await gumrua.connect(alice).createProduct(name, slug, description, price, image);
+    'https://qqhuhpdwqoguhxekruva.supabase.co/storage/v1/object/public/public/16790793531262.webp';
+  const tx = await gumrua
+    .connect(alice)
+    .createProduct(name, slug, description, price, priceEuro, image);
   const receipt = await tx.wait();
 
   const id = receipt.events?.find((e) => e.event === 'ProductCreated')?.args?._productId;

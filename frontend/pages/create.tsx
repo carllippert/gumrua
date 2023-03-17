@@ -72,7 +72,7 @@ const Create = () => {
             error={errors.name?.message}
           />
           <Input
-            label="Price"
+            label="Price (in Euro)"
             type="number"
             step="0.0000001"
             block

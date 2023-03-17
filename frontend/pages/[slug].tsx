@@ -16,9 +16,9 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
   const router = useRouter();
 
   const { data: product } = useProductBySlug(slug);
-  const { mutate: buyProduct } = useBuyProduct({
+  const { mutate: buyProduct, isLoading } = useBuyProduct({
     onSuccess() {
-      router.push(`/purchases`);
+      router.push(`/dashboard`);
     },
   });
 
@@ -27,6 +27,13 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
   const onBuyProduct = async () => {
     buyProduct({
       id: product.id,
+    });
+  };
+
+  const onBuyProductWithEuro = async () => {
+    buyProduct({
+      id: product.id,
+      withEuro: true,
     });
   };
 
@@ -46,7 +53,7 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
         <p className="mt-5">{product.description}</p>
         <div className="bg-base-200 rounded-box mt-6 mb-2 flex justify-between items-center px-4 py-3">
           <b>Price: </b>
-          <span>{ethers.utils.formatEther(product.price)} xDAI</span>
+          <span>{ethers.utils.formatEther(product.priceEuro)} EURe</span>
         </div>
         {address === product.seller ? (
           <CopyButton
@@ -61,8 +68,19 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
               className="mt-2 tracking-wider"
               block
               onClick={onBuyProduct}
+              disabled={isLoading}
+              loading={isLoading}
             >
               Buy
+            </Button>
+            <Button
+              className="mt-2 tracking-wider"
+              block
+              onClick={onBuyProductWithEuro}
+              disabled={isLoading}
+              loading={isLoading}
+            >
+              Buy with EURe
             </Button>
             <div className="divider"></div>
             <div className="mt-4 flex-col flex w-full">

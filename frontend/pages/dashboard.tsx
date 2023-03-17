@@ -10,12 +10,12 @@ import { PurchasedProducts } from "../components/purchased-products";
 const DashboardPage = () => {
   const items = [
     {
-      label: "Created Products",
-      content: <CreatedProducts />,
-    },
-    {
       label: "Purchased Products",
       content: <PurchasedProducts />,
+    },
+    {
+      label: "Created Products",
+      content: <CreatedProducts />,
     },
   ];
 
