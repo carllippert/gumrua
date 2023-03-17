@@ -7,6 +7,16 @@ import { MoneriumClient, Chain, Network } from "@monerium/sdk";
 const CODE_CHALLENGE = "9Y__uhKapn7GO_ElcaQpd8C3hdOyqTzAU4VXyR2iEV0";
 const CODE_VERIFIER = "12345678901234567890123456789012345678901234567890";
 
+if (!process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID) {
+  throw new Error("NEXT_PUBLIC_MONERIUM_CLIENT_ID is not defined");
+}
+const MONERIUM_CLIENT_ID = process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID;
+
+if (!process.env.NEXT_PUBLIC_MONERIUM_REDIRECT_URL) {
+  throw new Error("NEXT_PUBLIC_MONERIUM_REDIRECT_URL is not defined");
+}
+const MONERIUM_REDIRECT_URL = process.env.NEXT_PUBLIC_MONERIUM_REDIRECT_URL;
+
 export interface MoneriumProviderConfig {
   onRampProviderConfig: {
     events: {
@@ -41,7 +51,7 @@ export class MoneriumAdapter implements SafeOnRampClient {
 
       if (savedRefreshToken) {
         await this.client.auth({
-          client_id: process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID || "",
+          client_id: MONERIUM_CLIENT_ID,
           refresh_token: savedRefreshToken,
         });
 
@@ -58,10 +68,10 @@ export class MoneriumAdapter implements SafeOnRampClient {
         if (code) {
           // Authenticate user with authentication code
           await this.client.auth({
-            client_id: process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID || "",
+            client_id: MONERIUM_CLIENT_ID,
             code,
             code_verifier: CODE_VERIFIER,
-            redirect_uri: "http://localhost:3000/",
+            redirect_uri: MONERIUM_REDIRECT_URL,
           });
 
           // Get user data
@@ -87,7 +97,7 @@ export class MoneriumAdapter implements SafeOnRampClient {
     try {
       let authFlowUrl = this.client.getAuthFlowURI({
         client_id: process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID || "",
-        redirect_uri: "http://localhost:3000/",
+        redirect_uri: MONERIUM_REDIRECT_URL,
         // immediately connect a wallet by adding these optional parameters:
         // TODO: get address from options
         address: options.walletAddress,
