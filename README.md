@@ -13,25 +13,31 @@
 
 #### Tech Stack:
 
-React Framework:
+React Framework:  
 [NextJS](https://nextjs.org/)
 
-Deployment:
+Deployment:  
 [Vercel](https://vercel.com/)
 
-File Storage (web2):
+File Storage (web2):  
 [Supabase](https://supabase.com/)
 
-Authentication:
+Authentication:  
 [SIWE - Sign In With Ethereum](https://docs.login.xyz/integrations/nextauth.js)
 [@rainbow-me/rainbowkit-siwe-next-auth](https://www.npmjs.com/package/@rainbow-me/rainbowkit-siwe-next-auth)
 [next-auth](https://next-auth.js.org/)
 
-Smart Contract Interaction Client Side:
+Smart Contract Interaction Client Side:  
 [Wagmi](https://wagmi.sh/)
 
-Smart Contract Interaction Server Side:
+Smart Contract Interaction Server Side:  
 [Ethers.js](https://docs.ethers.org/v5/)
 
-Wallet Connection:
+Wallet Connection:  
 [Rainbowkit](https://www.rainbowkit.com/)
+
+Smart Contract Developement Framework:  
+[Hardhat](https://hardhat.org/)
+
+NFT Standard:  
+[EIP 1155](https://eips.ethereum.org/EIPS/eip-1155)
