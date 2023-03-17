@@ -55,6 +55,9 @@ NFT Standard:
 Blockchain:  
 [Gnosis](https://www.gnosis.io/)
 
+On/Off Ramp:
+[Monerium](https://monerium.com/)
+
 ### Hackathon Submission
 
 ### Video Demo
@@ -65,7 +68,7 @@ Blockchain:
 
 [Twitter](https://twitter.com/carllippert)
 [LinkedIn](https://www.linkedin.com/in/carllippert/)
-[Githbu](https://github.com/carllippert)
+[Github](https://github.com/carllippert)
 
 #### Mattia Pomelli
 

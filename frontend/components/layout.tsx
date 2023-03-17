@@ -36,7 +36,7 @@ const Layout = ({ children }: { children: any }) => {
 
       {/* <Header /> */}
       <main className="flex-1">{children}</main>
-      {/* <footer className="h-32">Footer</footer> */}
+      <footer className="h-32"></footer>
     </div>
   );
 };

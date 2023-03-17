@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
@@ -13,8 +14,39 @@ import Link from "next/link";
 import { Product } from "../types/products";
 import { useHasBoughtProduct } from "../components/use-has-bought-product";
 import { DownloadButton } from "../components/download-button";
-import { QRCodeCanvas } from "qrcode.react";
+import QRCode from "react-qr-code";
+import Navbar from "../components/navbar";
+import { EyeIcon } from "@heroicons/react/24/outline";
 
+const QR = () => {
+  const [hide, setHide] = useState(true);
+
+  return (
+    <div className="w-full mt-2">
+      {hide ? (
+        <Button
+          onClick={() => setHide(false)}
+          rightIcon={<EyeIcon className="h-5 w-5" />}
+          className="mt-2 tracking-wider"
+          block
+        >
+          QR Code
+        </Button>
+      ) : (
+        <div className="mx-auto mt-12 h-52 w-52 bg-pink-200">
+          <QRCode
+            onClick={() => setHide(true)}
+            size={256}
+            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+            value={window.location.href}
+            viewBox={`0 0 256 256`}
+            className="bg-blue-200"
+          />
+        </div>
+      )}
+    </div>
+  );
+};
 const ProductInfo = ({ product }: { product: Product }) => {
   const { address } = useAccount();
   const router = useRouter();
@@ -41,7 +73,7 @@ const ProductInfo = ({ product }: { product: Product }) => {
 
   return (
     <>
-      <div className="relative h-40 rounded-box overflow-hidden mt-20">
+      <div className="relative h-40 rounded-box overflow-hidden lg:mt-20">
         <Image
           src={product.image}
           layout="fill"
@@ -64,13 +96,7 @@ const ProductInfo = ({ product }: { product: Product }) => {
             block
             label="Copy link"
           />
-          <QRCodeCanvas
-            // id="qrCode"
-            value={window.location.href}
-            size={300}
-            // bgColor={"#"}
-            level={"H"}
-          />
+          <QR />
         </>
       ) : (
         <>
@@ -130,6 +156,7 @@ const Purchase = () => {
 
   return (
     <Layout>
+      <Navbar currentPage="item" />
       <Container className="mt-10">
         <PurchaseInner slug={slug} />
       </Container>
