@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Product } from "../types/products";
 import { useHasBoughtProduct } from "../components/use-has-bought-product";
 import { DownloadButton } from "../components/download-button";
+import { QRCodeCanvas } from "qrcode.react";
 
 const ProductInfo = ({ product }: { product: Product }) => {
   const { address } = useAccount();
@@ -56,12 +57,21 @@ const ProductInfo = ({ product }: { product: Product }) => {
         <span>{ethers.utils.formatEther(product.priceEuro)} EURe</span>
       </div>
       {address === product.seller ? (
-        <CopyButton
-          text={window.location.href}
-          className="mt-2 tracking-wider"
-          block
-          label="Copy link"
-        />
+        <>
+          <CopyButton
+            text={window.location.href}
+            className="mt-2 tracking-wider"
+            block
+            label="Copy link"
+          />
+          <QRCodeCanvas
+            // id="qrCode"
+            value={window.location.href}
+            size={300}
+            // bgColor={"#"}
+            level={"H"}
+          />
+        </>
       ) : (
         <>
           {hasBoughtProduct ? (
