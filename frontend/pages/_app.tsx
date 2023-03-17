@@ -9,6 +9,7 @@ import { gnosis, gnosisChiado, hardhat } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
+import { OnRampProvider } from "../context/on-ramp-provider";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -44,7 +45,9 @@ function MyApp({
       <SessionProvider session={pageProps.session} refetchInterval={0}>
         <RainbowKitSiweNextAuthProvider>
           <RainbowKitProvider chains={chains}>
-            <Component {...pageProps} />
+            <OnRampProvider>
+              <Component {...pageProps} />
+            </OnRampProvider>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
       </SessionProvider>

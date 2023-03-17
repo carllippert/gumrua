@@ -1,53 +1,64 @@
 import {
   SafeOnRampClient,
-  StripeSession,
   SafeOnRampOpenOptions,
-  StripeProviderConfig,
-  SafeOnRampEventHandlers,
-  SafeOnRampEvent,
-  OnrampSessionUpdatedEvent,
 } from "@safe-global/onramp-kit/dist/src/types/index";
-// import {} from "@monerium/sdk/dist";
-import { MoneriumClient, Chain, Network } from "@monerium/sdk";
+import { MoneriumClient, Chain, Network, Profile } from "@monerium/sdk";
+
+export interface MoneriumProviderConfig {
+  onRampProviderConfig: {
+    events: {
+      onLoaded: (iban: string | undefined) => void;
+    };
+  };
+}
 
 /**
  * This class implements the SafeOnRampClient interface for the Stripe provider
  * @class StripeAdapter
  */
-export default class MoneriumAdapter implements SafeOnRampClient {
-  client: MoneriumClient;
+export class MoneriumAdapter implements SafeOnRampClient {
+  client: MoneriumClient | undefined;
+  config: MoneriumProviderConfig;
 
   /**
    * Initialize the MoneriumAdapter
    * @constructor
    * @param config The configuration object for the Monerium provider
    */
-  constructor() {
-    this.client = new MoneriumClient();
+  constructor(config: MoneriumProviderConfig) {
+    this.config = config;
   }
 
   async init() {
+    this.client = new MoneriumClient();
+
     try {
       const code = new URLSearchParams(window.location.search).get("code");
 
       if (code) {
-        console.log("Code verifier: ", this.client.codeVerifier);
-        console.log("Code: ", code);
-
         await this.client.auth({
           client_id: process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID || "",
           code,
           code_verifier: "12345678901234567890123456789012345678901234567890",
           redirect_uri: "http://localhost:3000/",
         });
-        console.log("Here");
 
         // User is now authenticated, get authentication data
         const context = await this.client.getAuthContext();
-        console.log("Context: ", context);
-
         const profileId = context.profiles[0].id;
         const profile = await this.client.getProfile(profileId);
+        console.log("Profile: ", profile);
+
+        const account = profile.accounts.find(
+          (account) =>
+            account.chain === "gnosis" &&
+            account.standard === "iban" &&
+            account.network === "chiado"
+        );
+        const iban = account?.iban;
+        console.log("Iban: ", iban);
+
+        this.config.onRampProviderConfig.events.onLoaded(iban);
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -59,7 +70,7 @@ export default class MoneriumAdapter implements SafeOnRampClient {
    * @param options The options to open the onramp widget
    */
   async open(options: SafeOnRampOpenOptions) {
-    console.log("Open");
+    if (!this.client) return;
 
     try {
       let authFlowUrl = this.client.getAuthFlowURI({
@@ -81,7 +92,7 @@ export default class MoneriumAdapter implements SafeOnRampClient {
 
       window.location.href = href.toString();
     } catch {
-      throw new Error("Error trying to create a new Monerium session");
+      console.log("Error trying to create a new Monerium session");
     }
   }
 
@@ -89,6 +100,6 @@ export default class MoneriumAdapter implements SafeOnRampClient {
    * This method close the onramp widget
    */
   async close() {
-    throw new Error("Method not implemented.");
+    console.log("Method not implemented.");
   }
 }

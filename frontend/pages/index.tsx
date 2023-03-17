@@ -2,68 +2,10 @@ import type { NextPage } from "next";
 import logo from "../public/gumrua.svg";
 import Image from "next/image";
 import Layout from "../components/layout";
-import { useEffect, useState } from "react";
-
-import { SafeOnRampKit, SafeOnRampProviderType } from "@safe-global/onramp-kit";
-import MoneriumAdapter from "../utils/monerium-adapter";
-
-// override SafeOnRampProviderType type of @safe-global/onramp-kit
-declare module "@safe-global/onramp-kit" {
-  export enum SafeOnRampProviderType {
-    Monerium = 1,
-  }
-}
-
-interface MoneriumProviderConfig {
-  onRampProviderConfig: {};
-}
-
-class PatchedSafeOnRampKit extends SafeOnRampKit {
-  static async init(
-    providerType: SafeOnRampProviderType,
-    config: {}
-  ): Promise<SafeOnRampKit> {
-    let client;
-    switch (providerType) {
-      case SafeOnRampProviderType.Monerium:
-        client = new MoneriumAdapter();
-        break;
-      default:
-        throw new Error("Provider type not supported");
-    }
-    await client.init();
-    return new SafeOnRampKit(client);
-  }
-}
+import { useOnRamp } from "../context/on-ramp-provider";
 
 const Home: NextPage = () => {
-  const [safeOnRamp, setSafeOnRamp] = useState<SafeOnRampKit>();
-
-  useEffect(() => {
-    const initSafeOnRamp = async () => {
-      // @ts-ignore
-      const safeOnRamp = await PatchedSafeOnRampKit.init(
-        SafeOnRampProviderType.Monerium,
-        {
-          onRampProviderConfig: {},
-        }
-      );
-
-      setSafeOnRamp(safeOnRamp);
-    };
-
-    initSafeOnRamp();
-  }, []);
-
-  const onConnectMonerium = async () => {
-    if (!safeOnRamp) return;
-
-    await safeOnRamp.open({
-      element: "",
-      walletAddress: "",
-      networks: [],
-    });
-  };
+  const { connect, iban } = useOnRamp();
 
   return (
     <Layout>
@@ -83,10 +25,10 @@ const Home: NextPage = () => {
           </a>
           <div className="flex-1 h-full" />
           <button
-            onClick={onConnectMonerium}
+            onClick={connect}
             className="text-white bg-black border-l-2 border-black font-3xl hover:text-black h-full w-40 hover:bg-[#ff90e8]"
           >
-            Connect Monerium
+            {iban || "Connect Monerium"}
           </button>
         </div>
       </div>
