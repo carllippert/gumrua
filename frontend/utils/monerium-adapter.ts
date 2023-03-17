@@ -30,35 +30,44 @@ export class MoneriumAdapter implements SafeOnRampClient {
   }
 
   async init() {
-    this.client = new MoneriumClient();
-
     try {
-      const code = new URLSearchParams(window.location.search).get("code");
+      this.client = new MoneriumClient();
 
-      if (code) {
+      // Get refresh token from local storage
+      const savedRefreshToken = localStorage.getItem("monerium-refresh-token");
+
+      if (savedRefreshToken) {
         await this.client.auth({
           client_id: process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID || "",
-          code,
-          code_verifier: "12345678901234567890123456789012345678901234567890",
-          redirect_uri: "http://localhost:3000/",
+          refresh_token: savedRefreshToken,
         });
 
-        // User is now authenticated, get authentication data
-        const context = await this.client.getAuthContext();
-        const profileId = context.profiles[0].id;
-        const profile = await this.client.getProfile(profileId);
-        console.log("Profile: ", profile);
-
-        const account = profile.accounts.find(
-          (account) =>
-            account.chain === "gnosis" &&
-            account.standard === "iban" &&
-            account.network === "chiado"
-        );
-        const iban = account?.iban;
-        console.log("Iban: ", iban);
-
+        // Get user data
+        const iban = await this.getIban();
         this.config.onRampProviderConfig.events.onLoaded(iban);
+
+        // Save refresh token to local storage
+        this.saveRefreshToken();
+      } else {
+        // Get code from URL
+        const code = new URLSearchParams(window.location.search).get("code");
+
+        if (code) {
+          // Authenticate user with authentication code
+          await this.client.auth({
+            client_id: process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID || "",
+            code,
+            code_verifier: "12345678901234567890123456789012345678901234567890",
+            redirect_uri: "http://localhost:3000/",
+          });
+
+          // Get user data
+          const iban = await this.getIban();
+          this.config.onRampProviderConfig.events.onLoaded(iban);
+
+          // Save refresh token to local storage
+          this.saveRefreshToken();
+        }
       }
     } catch (error) {
       console.log("Error: ", error);
@@ -77,7 +86,8 @@ export class MoneriumAdapter implements SafeOnRampClient {
         client_id: process.env.NEXT_PUBLIC_MONERIUM_CLIENT_ID || "",
         redirect_uri: "http://localhost:3000/",
         // immediately connect a wallet by adding these optional parameters:
-        // address: "0x0000000000000000000000000000000000000000",
+        // TODO: get address from options
+        // address: "0x8d960334c2EF30f425b395C1506Ef7c5783789F3",
         // signature:
         // "0xVALID_SIGNATURE_2c23962f5a2f189b777b6ecc19a395f446c86aaf3b5d1dc0ba919ddb34372f4c9f0c8686cfc2e8266b3e4d8d1bc7bc67c34a11f9dfe8e691b",
         chain: Chain.gnosis,
@@ -94,6 +104,36 @@ export class MoneriumAdapter implements SafeOnRampClient {
     } catch {
       console.log("Error trying to create a new Monerium session");
     }
+  }
+
+  async getIban() {
+    if (!this.client) return;
+
+    const context = await this.client.getAuthContext();
+    const profileId = context.profiles[0].id;
+    const profile = await this.client.getProfile(profileId);
+
+    const account = profile.accounts.find(
+      (account) =>
+        account.chain === "gnosis" &&
+        account.standard === "iban" &&
+        account.network === "chiado"
+    );
+
+    return account?.iban;
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem("monerium-refresh-token");
+  }
+
+  saveRefreshToken() {
+    if (!this.client) return;
+
+    localStorage.setItem(
+      "monerium-refresh-token",
+      this.client.bearerProfile?.refresh_token || ""
+    );
   }
 
   /**
