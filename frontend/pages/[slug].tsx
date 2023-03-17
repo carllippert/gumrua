@@ -52,7 +52,6 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
           <CopyButton
             text={window.location.href}
             className="mt-2 tracking-wider"
-            size="lg"
             block
             label="Copy link"
           />
@@ -60,7 +59,6 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
           <div>
             <Button
               className="mt-2 tracking-wider"
-              size="lg"
               block
               onClick={onBuyProduct}
             >

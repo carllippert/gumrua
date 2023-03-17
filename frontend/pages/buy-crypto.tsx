@@ -25,7 +25,7 @@ const BalanceBanner = () => {
   });
 
   return (
-    <div className="bg-accent/20 px-4 py-4 flex justify-center gap-4 items-center mb-2 mt-12">
+    <div className="bg-accent/20 px-4 py-4 flex justify-center gap-4 items-center mb-4 mt-12">
       <p>
         xDAI Balance:{" "}
         <span className="font-bold">
