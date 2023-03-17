@@ -11,6 +11,7 @@ import { useProductBySlug } from "../hooks/use-product-by-slug";
 import { copyToClipboard } from "../utils/copy-to-clipboard";
 import { DocumentDuplicateIcon, CheckIcon } from "@heroicons/react/24/outline";
 import Container from "../components/container";
+import { CopyButton } from "../components/copy-button";
 
 const PurchaseInner = ({ slug }: { slug: string }) => {
   const { address } = useAccount();
@@ -50,30 +51,23 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
             layout="fill"
             objectFit="cover"
             alt="Product"
+            priority
           />
         </div>
-        <h1 className="text-5xl font-medium mt-4">{product.name}</h1>
+        <h1 className="text-4xl font-bold mt-4">{product.name}</h1>
         <p className="mt-5">{product.description}</p>
         <div className="bg-base-200 rounded-box mt-6 mb-2 flex justify-between items-center px-4 py-3">
           <b>Price: </b>
           <span>{ethers.utils.formatEther(product.price)} xDAI</span>
         </div>
         {address === product.seller ? (
-          <Button
+          <CopyButton
+            text={window.location.href}
             className="mt-2 tracking-wider"
             size="lg"
             block
-            onClick={onCopyLink}
-            rightIcon={
-              copied ? (
-                <CheckIcon className="h-5 w-5" />
-              ) : (
-                <DocumentDuplicateIcon className="h-5 w-5" />
-              )
-            }
-          >
-            {copied ? "Copied!" : "Copy link"}
-          </Button>
+            label="Copy link"
+          />
         ) : (
           <Button
             className="mt-2 tracking-wider"

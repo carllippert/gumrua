@@ -60,7 +60,7 @@ const Create = () => {
 
   return (
     <Layout>
-      <Container>
+      <Container className="mt-10">
         <h1 className="text-4xl font-bold mb-4">Create new product</h1>
         <form className="flex flex-col gap-2" onSubmit={onSubmit}>
           <Input
@@ -72,6 +72,7 @@ const Create = () => {
           <Input
             label="Price"
             type="number"
+            step="0.0000001"
             block
             {...register("price", { required: "Price is required" })}
             error={errors.price?.message}

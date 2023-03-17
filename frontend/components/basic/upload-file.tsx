@@ -21,7 +21,7 @@ const UploadFile = ({ file, setFile, accept, fileTypes }: UploadFileProps) => {
       <div className="flex items-center justify-center w-full">
         <label
           htmlFor={id}
-          className="flex flex-col items-center justify-center w-full h-32 border-2 border-primary border-dashed rounded-lg cursor-pointer"
+          className="flex flex-col items-center justify-center w-full h-32 border-2 border-primary border-dashed rounded-box cursor-pointer"
         >
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <svg
