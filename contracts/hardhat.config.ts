@@ -10,23 +10,26 @@ if (!mnemonic) {
   throw new Error('Please set your MNEMONIC in a .env file');
 }
 
+const accounts = {
+  mnemonic,
+  count: 100,
+};
+
 const config: HardhatUserConfig = {
   solidity: '0.8.17',
   networks: {
     gnosis: {
       url: 'https://rpc.gnosischain.com',
-      accounts: {
-        mnemonic,
-        count: 100,
-      },
+      accounts,
     },
     chiado: {
       url: 'https://rpc.chiadochain.net',
       gasPrice: 1000000000,
-      accounts: {
-        mnemonic,
-        count: 100,
-      },
+      accounts,
+    },
+    'mantle-testnet': {
+      url: 'https://rpc.testnet.mantle.xyz/',
+      accounts,
     },
   },
   etherscan: {
