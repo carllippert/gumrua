@@ -3,6 +3,7 @@ import logo from "../public/gumrua.svg";
 import Image from "next/image";
 import Layout from "../components/layout";
 import Link from "next/link";
+import { Button } from "../components/basic/button";
 
 const Home: NextPage = () => {
   return (
@@ -29,11 +30,26 @@ const Home: NextPage = () => {
           </Link>
         </div>
       </div>
-      <div className="h-[550px] bg-pink-200 flex flex-row border-solid border-black border-b-2">
-        <div className="flex-1 bg-[#ff90e8] border-r-2 border-black border-solid">
-          Copy
+      {/* Hero */}
+      <div className="flex lg:h-[550px] h-[1100px] m-0 w-full bg-blue-200 flex-col p-0 gap-0 lg:flex-row border-solid border-black border-b-2">
+        <div className="flex-1 w-full h-full bg-[#ff90e8] border-b-2 lg:border-b-0 border-black border-solid ">
+          <div className="mx-auto my-auto max-w-[40rem] mt-16 lg:px-12 px-4">
+            <div className="md:text-8xl text-6xl font-semibold py-4">
+              Go from 0 to €1
+            </div>
+            <div className=" py-6 text-2xl">
+              With Gumrua, anyone on planet earth can start earning crypto. Just
+              start with something simple, see what works, and grow from there.
+            </div>
+            <Button
+              size="lg"
+              className="hover:bg-[#ff90e8] border-2 mt-6 hover:text-black font-inherit"
+            >
+              Start Selling
+            </Button>
+          </div>
         </div>
-        <div className=" flex-1 bg-[#ffc900] border-r-2 border-black border-solid">
+        <div className="flex-1 w-full h-full bg-[#ffc900] lg:border-r-2 border-black border-solid">
           Copy
         </div>
       </div>
