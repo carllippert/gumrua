@@ -43,6 +43,8 @@ export class MoneriumAdapter implements SafeOnRampClient {
   }
 
   async init() {
+    let iban: string | undefined;
+
     try {
       this.client = new MoneriumClient();
 
@@ -56,8 +58,7 @@ export class MoneriumAdapter implements SafeOnRampClient {
         });
 
         // Get user data
-        const iban = await this.getIban();
-        this.config.onRampProviderConfig.events.onLoaded(iban);
+        iban = await this.getIban();
 
         // Save refresh token to local storage
         this.saveRefreshToken();
@@ -75,8 +76,7 @@ export class MoneriumAdapter implements SafeOnRampClient {
           });
 
           // Get user data
-          const iban = await this.getIban();
-          this.config.onRampProviderConfig.events.onLoaded(iban);
+          iban = await this.getIban();
 
           // Save refresh token to local storage
           this.saveRefreshToken();
@@ -85,6 +85,8 @@ export class MoneriumAdapter implements SafeOnRampClient {
     } catch (error) {
       console.log("Error: ", error);
     }
+
+    this.config.onRampProviderConfig.events.onLoaded(iban);
   }
 
   /**

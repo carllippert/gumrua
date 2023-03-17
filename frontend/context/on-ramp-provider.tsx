@@ -40,6 +40,7 @@ class PatchedSafeOnRampKit extends SafeOnRampKit {
 
 interface OnRampState {
   iban: string | undefined;
+  loading: boolean;
   connect: () => Promise<void>;
 }
 
@@ -48,6 +49,7 @@ const OnRampContext = createContext<OnRampState | undefined>(undefined);
 export const OnRampProvider = ({ children }: { children: ReactNode }) => {
   const { address } = useAccount();
 
+  const [loading, setLoading] = useState(true);
   const [safeOnRamp, setSafeOnRamp] = useState<SafeOnRampKit>();
   const [iban, setIban] = useState<string>();
 
@@ -60,6 +62,7 @@ export const OnRampProvider = ({ children }: { children: ReactNode }) => {
             events: {
               onLoaded(iban) {
                 setIban(iban);
+                setLoading(false);
               },
             },
           },
@@ -83,7 +86,7 @@ export const OnRampProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <OnRampContext.Provider value={{ iban, connect: onConnect }}>
+    <OnRampContext.Provider value={{ iban, loading, connect: onConnect }}>
       {children}
     </OnRampContext.Provider>
   );
