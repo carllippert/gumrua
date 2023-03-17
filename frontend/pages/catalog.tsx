@@ -19,7 +19,7 @@ const Catalog = () => {
   if (products?.length === 0)
     return (
       <div className="flex justify-center my-14">
-        <p>No products purchased yet</p>
+        <p>No products yet</p>
       </div>
     );
 

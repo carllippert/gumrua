@@ -26,7 +26,11 @@ export const ProductCard = ({ product, linkToPage }: ProductCardProps) => {
             priority
           />
         </div>
-        <h4 className="font-semibold text-xl mt-3">{product.name}</h4>
+        <Link href={`/${product.slug}`}>
+          <a className="font-semibold text-xl mt-3 hover:opacity-80 block">
+            {product.name}
+          </a>
+        </Link>
         <p className="mt-2 text-base-content/80">{product.description}</p>
       </div>
       {linkToPage ? (
