@@ -16,7 +16,7 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
   const router = useRouter();
 
   const { data: product } = useProductBySlug(slug);
-  const { mutate: buyProduct } = useBuyProduct({
+  const { mutate: buyProduct, isLoading } = useBuyProduct({
     onSuccess() {
       router.push(`/dashboard`);
     },
@@ -68,6 +68,8 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
               className="mt-2 tracking-wider"
               block
               onClick={onBuyProduct}
+              disabled={isLoading}
+              loading={isLoading}
             >
               Buy
             </Button>
@@ -75,6 +77,8 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
               className="mt-2 tracking-wider"
               block
               onClick={onBuyProductWithEuro}
+              disabled={isLoading}
+              loading={isLoading}
             >
               Buy with EURe
             </Button>
