@@ -5,12 +5,13 @@ import Image from "next/image";
 import Layout from "../components/layout";
 import Link from "next/link";
 import { Button } from "../components/basic/button";
+import CustomConnect from "../components/customConnect";
 
 const Home: NextPage = () => {
   return (
     <Layout>
-      <div className="w-full md:ml-6 md:pr-6 pl-1 md:-mt-8">
-        <Image src={logo} width="1500" height="300" alt="gumrua logo" />
+      <div className="w-full md:ml-6 md:pr-6 pl-1">
+        <Image src={logo} width="1500" height="280" alt="gumrua logo" />
       </div>
 
       <div className="border-y-2 border-solid border-black h-20">
@@ -24,6 +25,7 @@ const Home: NextPage = () => {
             README
           </a>
           <div className="flex-1 h-full" />
+          <CustomConnect />
           <Link href="/create">
             <button className="text-white bg-black border-l-2 border-black font-3xl hover:text-black h-full w-40 hover:bg-[#ff90e8]">
               Start Selling

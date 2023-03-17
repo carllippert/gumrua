@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: any }) => {
           rel="icon"
         />
       </Head>
-      <Header />
+      {/* <Header /> */}
       <div>{children}</div>
       <footer className="h-32">Footer</footer>
     </div>
