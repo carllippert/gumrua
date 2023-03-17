@@ -100,7 +100,7 @@ export class MoneriumAdapter implements SafeOnRampClient {
         redirect_uri: MONERIUM_REDIRECT_URL,
         // immediately connect a wallet by adding these optional parameters:
         // TODO: get address from options
-        address: options.walletAddress,
+        // address: options.walletAddress,
         // signature:
         // "0xVALID_SIGNATURE_2c23962f5a2f189b777b6ecc19a395f446c86aaf3b5d1dc0ba919ddb34372f4c9f0c8686cfc2e8266b3e4d8d1bc7bc67c34a11f9dfe8e691b",
         chain: Chain.gnosis,

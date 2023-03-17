@@ -28,8 +28,8 @@ export const Tabs = ({ items, className }: TabsProps) => {
                   "text-sm font-medium",
                   "py-2.5 px-4",
                   "focus:outline-none",
-                  "focus-visible:ring-4",
-                  "focus:ring-primary focus:ring-opacity-50",
+                  // "focus-visible:ring-4",
+                  // "focus:ring-primary focus:ring-opacity-50",
                   selected
                     ? "bg-primary text-secondary-content shadow"
                     : "bg-base-300 text-text-primary hover:opacity-80"
