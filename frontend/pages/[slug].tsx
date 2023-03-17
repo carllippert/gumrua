@@ -18,7 +18,7 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
   const { data: product } = useProductBySlug(slug);
   const { mutate: buyProduct } = useBuyProduct({
     onSuccess() {
-      router.push(`/purchases`);
+      router.push(`/dashboard`);
     },
   });
 
@@ -27,6 +27,13 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
   const onBuyProduct = async () => {
     buyProduct({
       id: product.id,
+    });
+  };
+
+  const onBuyProductWithEuro = async () => {
+    buyProduct({
+      id: product.id,
+      withEuro: true,
     });
   };
 
@@ -63,6 +70,13 @@ const PurchaseInner = ({ slug }: { slug: string }) => {
               onClick={onBuyProduct}
             >
               Buy
+            </Button>
+            <Button
+              className="mt-2 tracking-wider"
+              block
+              onClick={onBuyProductWithEuro}
+            >
+              Buy with EURe
             </Button>
             <div className="divider"></div>
             <div className="mt-4 flex-col flex w-full">

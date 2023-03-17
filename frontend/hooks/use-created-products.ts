@@ -26,6 +26,7 @@ export const useCreatedProducts = () => {
         slug: product.slug,
         description: product.description,
         price: product.price,
+        priceEuro: product.priceEuro,
         seller: product.seller as `0x${string}`,
         image: product.image,
       });

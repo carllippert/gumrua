@@ -2,6 +2,7 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
@@ -16,12 +17,23 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 contract Gumrua is ERC1155, Ownable {
     using Counters for Counters.Counter;
 
+    /**
+     * @dev Product struct
+     * @param seller Address of the seller
+     * @param name Name of the product
+     * @param slug Slug of the product
+     * @param description Description of the product
+     * @param price Price of the product
+     * @param priceEuro Price of the product in EURe tokens
+     * @param image Image of the product
+     */
     struct Product {
         address seller;
         string name;
         string slug;
         string description;
         uint256 price;
+        uint256 priceEuro;
         string image;
     }
 
@@ -40,6 +52,8 @@ contract Gumrua is ERC1155, Ownable {
     // Divider used for fees
     uint16 private constant FEE_DIVIDER = 10000;
 
+    IERC20 public euroToken;
+
     // =========================== Events ==============================
 
     /**
@@ -52,6 +66,7 @@ contract Gumrua is ERC1155, Ownable {
         string _slug,
         string _description,
         uint256 _price,
+        uint256 _priceEuro,
         string _image
     );
 
@@ -72,9 +87,10 @@ contract Gumrua is ERC1155, Ownable {
 
     // =========================== Constructor ==============================
 
-    constructor() ERC1155("") {
+    constructor(IERC20 _euroToken) ERC1155("") {
         setProtocolFee(500);
         nextProductId.increment();
+        euroToken = _euroToken;
     }
 
     // =========================== User functions ==============================
@@ -84,7 +100,8 @@ contract Gumrua is ERC1155, Ownable {
      * @param _name Name of the product
      * @param _slug Slug of the product
      * @param _description Description of the product
-     * @param _price Price of the product
+     * @param _price Price of the product in EURe tokens
+     * @param _priceEuro Price of the product in euro
      * @param _image Image of the product
      */
     function createProduct(
@@ -92,26 +109,29 @@ contract Gumrua is ERC1155, Ownable {
         string memory _slug,
         string memory _description,
         uint256 _price,
+        uint256 _priceEuro,
         string memory _image
     ) public {
         uint256 id = nextProductId.current();
-        Product memory product = Product(msg.sender, _name, _slug, _description, _price, _image);
+        Product memory product = Product(msg.sender, _name, _slug, _description, _price, _priceEuro, _image);
         products[id] = product;
         slugToId[_slug] = id;
         nextProductId.increment();
 
-        emit ProductCreated(id, msg.sender, _name, _slug, _description, _price, _image);
+        emit ProductCreated(id, msg.sender, _name, _slug, _description, _price, _priceEuro, _image);
     }
 
     /**
      * @dev Updates the price of the product
      * @param _productId Id of the product
      * @param _price New price of the product
+     * @param _priceEuro New price of the product in euro
      */
-    function updateProductPrice(uint256 _productId, uint256 _price) public {
+    function updateProductPrice(uint256 _productId, uint256 _price, uint256 _priceEuro) public {
         Product storage product = products[_productId];
         require(product.seller == msg.sender, "Only seller can update price");
         product.price = _price;
+        product.priceEuro = _priceEuro;
 
         emit ProductPriceUpdated(_productId, _price);
     }
@@ -122,19 +142,33 @@ contract Gumrua is ERC1155, Ownable {
      */
     function buyProduct(uint256 _productId) public payable {
         Product memory product = products[_productId];
-        require(msg.value >= product.price, "Not enough ETH sent");
+        bool isEure = msg.value == 0; // whether the buyer is buying with EURe tokens
+        uint256 price = isEure ? product.priceEuro : product.price;
+
+        // If msg.value == 0, it means that the user is paying with EURe tokens
+        require(isEure || msg.value == price, "Not enough ETH sent");
+
+        if (isEure) {
+            require(euroToken.transferFrom(msg.sender, address(this), price), "Transfer must not fail");
+        }
 
         _mint(msg.sender, _productId, 1, "");
 
-        uint256 fee = (protocolFee * msg.value) / FEE_DIVIDER;
+        uint256 fee = (protocolFee * price) / FEE_DIVIDER;
 
-        (bool sentSeller, ) = payable(product.seller).call{value: msg.value - fee}("");
-        require(sentSeller, "Failed to send Ether to seller");
-
-        (bool sentOwner, ) = payable(owner()).call{value: fee}("");
-        require(sentOwner, "Failed to send Ether to owner");
+        sendBalance(payable(product.seller), price - fee, isEure);
+        sendBalance(payable(owner()), fee, isEure);
 
         emit ProductBought(_productId, msg.sender, msg.value, fee);
+    }
+
+    function sendBalance(address payable _recipient, uint256 _amount, bool _isEure) internal {
+        if (_isEure) {
+            require(euroToken.transfer(_recipient, _amount), "Transfer must not fail");
+        } else {
+            (bool sent, ) = payable(_recipient).call{value: _amount}("");
+            require(sent, "Failed to send Ether");
+        }
     }
 
     // =========================== Owner functions ==============================

@@ -1,6 +1,12 @@
 export const GumruaAbi = [
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "contract IERC20",
+        name: "_euroToken",
+        type: "address",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "constructor",
   },
@@ -116,6 +122,12 @@ export const GumruaAbi = [
         indexed: false,
         internalType: "uint256",
         name: "_price",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "_priceEuro",
         type: "uint256",
       },
       {
@@ -337,6 +349,11 @@ export const GumruaAbi = [
         type: "uint256",
       },
       {
+        internalType: "uint256",
+        name: "_priceEuro",
+        type: "uint256",
+      },
+      {
         internalType: "string",
         name: "_image",
         type: "string",
@@ -345,6 +362,19 @@ export const GumruaAbi = [
     name: "createProduct",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "euroToken",
+    outputs: [
+      {
+        internalType: "contract IERC20",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -417,6 +447,11 @@ export const GumruaAbi = [
       {
         internalType: "uint256",
         name: "price",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "priceEuro",
         type: "uint256",
       },
       {
@@ -606,6 +641,11 @@ export const GumruaAbi = [
       {
         internalType: "uint256",
         name: "_price",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_priceEuro",
         type: "uint256",
       },
     ],

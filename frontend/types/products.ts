@@ -7,5 +7,6 @@ export interface Product {
   slug: string;
   description: string;
   price: BigNumber;
+  priceEuro: BigNumber;
   image: string;
 }

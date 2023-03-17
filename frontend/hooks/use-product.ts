@@ -9,7 +9,8 @@ export const useProduct = (productId: number) => {
     if (!gumrua) return;
 
     const product = await gumrua.products(productId);
-    const { seller, name, slug, description, price, image } = product;
+    const { seller, name, slug, description, price, priceEuro, image } =
+      product;
 
     return {
       id: productId,
@@ -18,6 +19,7 @@ export const useProduct = (productId: number) => {
       slug,
       description,
       price,
+      priceEuro,
       image,
     };
   });
