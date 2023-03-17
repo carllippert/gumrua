@@ -33,7 +33,7 @@ const QR = () => {
           QR Code
         </Button>
       ) : (
-        <div className="mx-auto mt-12 h-52 w-52 bg-pink-200">
+        <div className="mx-auto mt-12 h-52 w-52">
           <QRCode
             onClick={() => setHide(true)}
             size={256}
