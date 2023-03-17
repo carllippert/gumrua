@@ -33,7 +33,7 @@ export const useCreateProduct = (options?: UseCreateProductOptions) => {
       const imageUrl = await uploadImage(image);
       if (!imageUrl) return;
 
-      await uploadPdf(pdf);
+      await uploadPdf(pdf, slug);
 
       const tx = await gumrua.createProduct(
         name,
