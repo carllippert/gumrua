@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import logo from "../public/gumrua.svg";
 import Image from "next/image";
 import Layout from "../components/layout";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -21,9 +22,11 @@ const Home: NextPage = () => {
             README
           </a>
           <div className="flex-1 h-full" />
-          <button className="text-white bg-black border-l-2 border-black font-3xl hover:text-black h-full w-40 hover:bg-[#ff90e8]">
-            Start Selling
-          </button>
+          <Link href="/create">
+            <button className="text-white bg-black border-l-2 border-black font-3xl hover:text-black h-full w-40 hover:bg-[#ff90e8]">
+              Start Selling
+            </button>
+          </Link>
         </div>
       </div>
       <div className="h-[550px] bg-pink-200 flex flex-row border-solid border-black border-b-2">

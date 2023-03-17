@@ -18,6 +18,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     //get slug
     const { slug, chain } = req.query;
 
+    const fileSlug = slug;
+
     if (Number(chain) !== hardhat.id && Number(chain) !== gnosisChiado.id) {
       console.log("Chain Not Supported");
       throw new Error("Chain not supported");
@@ -40,22 +42,33 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           provider
         );
 
-        const productId = await contract.slugToId(slug);
-        if (productId.eq(0)) return;
+        const productId = await contract.slugToId(fileSlug);
+        if (productId.eq(0)) {
+          throw new Error("Product not found");
+        }
 
-        const product: any = await contract.products(productId);
-        const { seller, name, slug, description, price, image } = product;
+        const balance = await contract.balanceOf(wallet_address, productId);
 
-        //TODO: verify user owns the file
-        // const result = await contract.myFunction(arg1, arg2, ...);
+        if (balance.eq(1)) {
+          // get signed file from supabase
+          const { data, error } = await supabaseServer.storage
+            .from("private")
+            .createSignedUrl(`/${slug}.pdf`, 60); //1 minutes
 
-        // get signed file from supabase
-        const { data, error } = await supabaseServer.storage
-          .from("private")
-          .createSignedUrl(`${slug}.pdf`, 60 * 5); //5 minutes
+          if (error) {
+            console.error("Error from Supabase", error);
+            throw error;
+          }
 
-        res.status(200).json({ results: { file: "derp" } });
+          res.status(200).json({
+            results: { file: data.signedUrl, data: JSON.stringify(data) },
+          });
+        } else {
+          console.error("Not purchased - balance does not equal 1");
+          throw new Error("Not purchased");
+        }
       } else {
+        console.error("Not signed in");
         throw new Error("Not signed in");
       }
     }

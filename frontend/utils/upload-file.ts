@@ -35,5 +35,5 @@ export const uploadImage = async (file: File) => {
 };
 
 export const uploadPdf = async (file: File, slug: string) => {
-  await uploadFile(file, `${slug}$.pdf`, "private");
+  await uploadFile(file, `${slug}.pdf`, "private");
 };
