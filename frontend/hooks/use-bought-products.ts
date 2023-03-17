@@ -9,7 +9,6 @@ export const useBoughtProducts = () => {
   return useQuery<Product[]>(["bought-products", address], async () => {
     if (!gumrua || !address) return [];
 
-    /* Get requests */
     const products: Product[] = [];
     const eventFilter = gumrua.filters.ProductBought(null, address);
     const events = await gumrua.queryFilter(eventFilter);
