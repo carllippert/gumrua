@@ -81,7 +81,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       {address === product.seller ? (
         <CopyButton
           text={`${window.location.origin}/${product.slug}`}
-          className="mt-2"
+          // className="mt-2"
           // size="lg"
           block
           label="Copy link"

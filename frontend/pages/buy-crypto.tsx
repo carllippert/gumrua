@@ -3,12 +3,9 @@ import Link from "next/link";
 import { useAccount, useBalance, useNetwork } from "wagmi";
 import { Button } from "../components/basic/button";
 import { Spinner } from "../components/basic/spinner";
-import { Tabs } from "../components/basic/tabs";
 import Container from "../components/container";
-import { CreatedProducts } from "../components/created-products";
 import Layout from "../components/layout";
 import Navbar from "../components/navbar";
-import { PurchasedProducts } from "../components/purchased-products";
 import { EURE_TOKEN_ADDRESS } from "../constants/addresses";
 import { useOnRamp } from "../context/on-ramp-provider";
 
@@ -80,6 +77,8 @@ const IbanBanner = () => {
 };
 
 const BuyCryptoPage = () => {
+  const { offRamp } = useOnRamp();
+
   return (
     <Layout>
       <Navbar currentPage="crypto" />
@@ -94,6 +93,7 @@ const BuyCryptoPage = () => {
         </div>
         <BalanceBanner />
         <IbanBanner />
+        <Button onClick={() => offRamp(10)}>Off ramp</Button>
       </Container>
     </Layout>
   );

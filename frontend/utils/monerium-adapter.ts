@@ -2,7 +2,15 @@ import {
   SafeOnRampClient,
   SafeOnRampOpenOptions,
 } from "@safe-global/onramp-kit/dist/src/types/index";
-import { MoneriumClient, Chain, Network } from "@monerium/sdk";
+import {
+  MoneriumClient,
+  Chain,
+  Network,
+  PaymentStandard,
+  OrderKind,
+  Currency,
+} from "@monerium/sdk";
+import { SafeOffRampOptions } from "./extended-safe-on-ramp";
 
 const CODE_CHALLENGE = "9Y__uhKapn7GO_ElcaQpd8C3hdOyqTzAU4VXyR2iEV0";
 const CODE_VERIFIER = "12345678901234567890123456789012345678901234567890";
@@ -146,6 +154,37 @@ export class MoneriumAdapter implements SafeOnRampClient {
       "monerium-refresh-token",
       this.client.bearerProfile?.refresh_token || ""
     );
+  }
+
+  async offRamp(options: SafeOffRampOptions) {
+    if (!this.client) return;
+
+    const iban = await this.getIban();
+    if (!iban) return;
+
+    const order = await this.client.placeOrder({
+      chain: Chain.gnosis,
+      network: Network.chiado,
+      message: options.message,
+      signature: options.signature,
+      address: options.address,
+      amount: "10",
+      kind: OrderKind.issue,
+      memo: "",
+      currency: Currency.eur,
+      // accountId: "5a6f3a37-c49e-11ed-a453-e6504c27bfa9",
+      // accountId: "903c4a3e-c49e-11ed-a453-e6504c27bfa9",
+      counterpart: {
+        details: {
+          firstName: "Test",
+          lastName: "Test",
+        },
+        identifier: {
+          standard: PaymentStandard.iban,
+          iban,
+        },
+      },
+    });
   }
 
   /**
