@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "./header";
 import { NextSeo } from "next-seo";
+// import { CustomSwitchChain } from './CustomConnect';
 
 const Layout = ({ children }: { children: any }) => {
   return (
@@ -36,7 +37,7 @@ const Layout = ({ children }: { children: any }) => {
 
       {/* <Header /> */}
       <main className="flex-1">{children}</main>
-      <footer className="h-32"></footer>
+      <footer className="h-32">{/* <CustomSwitchChain /> */}</footer>
     </div>
   );
 };

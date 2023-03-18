@@ -1,5 +1,5 @@
 import Link from "next/link";
-import CustomConnect from "../components/customConnect";
+import { CustomConnect } from "../components/customConnect";
 
 const Navbar = ({ currentPage }: { currentPage: string }) => {
   return (
