@@ -3,8 +3,8 @@ import { mantleTestnet } from "./chains";
 
 export const GUMRUA_PRODUCT_ADDRESS: { [chainId: number]: `0x${string}` } = {
   [hardhat.id]: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-  [gnosisChiado.id]: "0x40eEd878c6125160ab8c4c931FcFd083D0511AF1",
-  [mantleTestnet.id]: "0x07B9837e81b917451690f2eF4752AC5F1434450B",
+  [gnosisChiado.id]: "0x449374de4737E2EF81Dd65556F6d8C53CE271977",
+  [mantleTestnet.id]: "0xe393fb46C545AAd9dC4F37b6D149D3401863baC5",
 };
 
 export const EURE_TOKEN_ADDRESS: { [chainId: number]: `0x${string}` } = {
