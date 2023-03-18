@@ -12,6 +12,7 @@ import { useOnRamp } from "../context/on-ramp-provider";
 import cx from "classnames";
 import { Input } from "../components/basic/input";
 import { useForm } from "react-hook-form";
+import { CopyButton } from "../components/copy-button";
 
 interface BalanceBannerProps {
   daiBalance: ethers.BigNumber;
@@ -58,7 +59,15 @@ const IbanBanner = () => {
         <>
           <p>Get crypto by sending a bank transfer to this IBAN</p>
           <p className="text-center mt-2">
-            <span className="font-bold text-xl">{iban}</span>
+            <div className="flex gap-2 items-center">
+              <span className="font-bold text-xl">{iban}</span>
+              <CopyButton
+                text={iban}
+                label="Copy"
+                size="xs"
+                variant="outline"
+              />
+            </div>
           </p>
           <a
             href="https://sandbox.monerium.dev/mockbank"
