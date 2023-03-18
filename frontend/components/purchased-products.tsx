@@ -28,7 +28,7 @@ export const PurchasedProducts = () => {
     );
 
   return (
-    <div className="grid-cols-1 grid gap-6 md:grid-cols-2">
+    <div className="grid-cols-1 grid gap-x-6 gap-y-10 md:grid-cols-2">
       {boughtProducts?.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}

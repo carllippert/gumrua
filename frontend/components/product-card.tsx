@@ -17,7 +17,7 @@ export const ProductCard = ({ product, linkToPage }: ProductCardProps) => {
   return (
     <div key={product.id} className="flex flex-col justify-between">
       <div className="mb-4">
-        <div className="relative h-40 rounded-box overflow-hidden">
+        <div className="relative h-32 rounded-box overflow-hidden">
           <Image
             src={product.image}
             layout="fill"

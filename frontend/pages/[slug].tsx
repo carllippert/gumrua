@@ -143,7 +143,12 @@ const ProductInfo = ({ product }: { product: Product }) => {
 
 const PurchaseInner = ({ slug }: { slug: string }) => {
   const { data: product } = useProductBySlug(slug);
-  if (!product) return <Spinner />;
+  if (!product)
+    return (
+      <div className="flex justify-center my-32">
+        <Spinner />
+      </div>
+    );
 
   return <ProductInfo product={product} />;
 };
