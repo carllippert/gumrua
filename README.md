@@ -54,6 +54,7 @@ NFT Standard:
 
 Blockchain:  
 [Gnosis](https://www.gnosis.io/)
+[Mantle](https://www.mantle.xyz/)
 
 On/Off Ramp:
 [Monerium](https://monerium.com/)
