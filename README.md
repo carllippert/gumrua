@@ -91,3 +91,8 @@ TalentLayer is usefull for services.
 We are both now exploring goods.
 
 Gumrua is a small exploration of consumer tools built with crypto for selling goods for the first [ETHPorto](https://ethporto.org/) hackathon.
+
+### Oh, this is us
+
+![team-rotated](https://user-images.githubusercontent.com/56316471/226104608-7e385725-ba6b-4d68-8be1-ffee2abf0cb0.jpeg)
+
