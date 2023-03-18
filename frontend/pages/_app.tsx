@@ -10,12 +10,13 @@ import { publicProvider } from "wagmi/providers/public";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import { OnRampProvider } from "../context/on-ramp-provider";
+import { mantleTestnet } from "../constants/chains";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
     gnosis,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
-      ? [hardhat, gnosisChiado]
+      ? [hardhat, gnosisChiado, mantleTestnet]
       : []),
   ],
   [publicProvider()]
