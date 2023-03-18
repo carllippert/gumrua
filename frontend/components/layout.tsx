@@ -21,7 +21,7 @@ const Layout = ({ children }: { children: any }) => {
           description: "web3 gumroad",
           images: [
             {
-              url: "https://qqhuhpdwqoguhxekruva.supabase.co/storage/v1/object/public/public/gumrua_seo.png",
+              url: "https://qqhuhpdwqoguhxekruva.supabase.co/storage/v1/object/public/public/Web3%20Gumroad.png",
               width: 1200,
               height: 630,
               alt: "Og Image Alt",
