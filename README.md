@@ -60,7 +60,11 @@ On/Off Ramp:
 
 ### Hackathon Submission
 
+https://taikai.network/ethporto/hackathons/ethportohackathon2023/projects/clfbplybq23848901x2z7rcncx4
+
 ### Video Demo
+
+https://www.youtube.com/watch?v=gkdy6azocdM
 
 ### Team
 
