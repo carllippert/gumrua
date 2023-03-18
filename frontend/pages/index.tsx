@@ -3,9 +3,7 @@ import logo from "../public/gumrua.svg";
 import og_girl from "../public/og_girl.png";
 import Image from "next/image";
 import Layout from "../components/layout";
-import Link from "next/link";
 import { Button } from "../components/basic/button";
-import CustomConnect from "../components/customConnect";
 import Navbar from "../components/navbar";
 
 const Home: NextPage = () => {
