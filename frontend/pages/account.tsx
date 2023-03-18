@@ -73,7 +73,7 @@ const IbanBanner = () => {
             href="https://sandbox.monerium.dev/mockbank"
             target="_blank"
             rel="noreferrer"
-            className="mt-4"
+            className="mt-2"
           >
             <Button>Send bank transfer</Button>
           </a>

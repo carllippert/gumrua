@@ -125,7 +125,7 @@ const ProductInfo = ({ product }: { product: Product }) => {
               <div className="divider"></div>
               <div className="mt-4 flex-col flex w-full">
                 <p className="mb-2 text-center">Running low on crypto?</p>
-                <Link href="/buy-crypto">
+                <Link href="/account">
                   <a>
                     <Button color="secondary" block>
                       Buy crypto
